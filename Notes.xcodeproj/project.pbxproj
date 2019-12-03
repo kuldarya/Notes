@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B30D4CE239667E100882218 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30D4CD239667E100882218 /* Note.swift */; };
+		4B30D4D323966A8100882218 /* NSObject+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30D4D223966A8100882218 /* NSObject+Utils.swift */; };
+		4B30D4D723966B2C00882218 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30D4D623966B2C00882218 /* NoteCell.swift */; };
+		4B30D4D92396720700882218 /* DateToString+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30D4D82396720700882218 /* DateToString+Utils.swift */; };
+		4B30D4DC2396777600882218 /* UIStoryBoard+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30D4DB2396777600882218 /* UIStoryBoard+Utils.swift */; };
+		4B30D4DE2396781100882218 /* NoteDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30D4DD2396781100882218 /* NoteDetailsViewController.swift */; };
 		4B706D1823965AA500E1BA37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B706D1723965AA500E1BA37 /* AppDelegate.swift */; };
-		4B706D1C23965AA500E1BA37 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B706D1B23965AA500E1BA37 /* ViewController.swift */; };
+		4B706D1C23965AA500E1BA37 /* NotesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B706D1B23965AA500E1BA37 /* NotesListViewController.swift */; };
 		4B706D1F23965AA500E1BA37 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B706D1D23965AA500E1BA37 /* Main.storyboard */; };
 		4B706D2223965AA500E1BA37 /* Notes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4B706D2023965AA500E1BA37 /* Notes.xcdatamodeld */; };
 		4B706D2423965AA600E1BA37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B706D2323965AA600E1BA37 /* Assets.xcassets */; };
@@ -16,9 +22,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4B30D4CD239667E100882218 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		4B30D4D223966A8100882218 /* NSObject+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Utils.swift"; sourceTree = "<group>"; };
+		4B30D4D623966B2C00882218 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
+		4B30D4D82396720700882218 /* DateToString+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateToString+Utils.swift"; sourceTree = "<group>"; };
+		4B30D4DB2396777600882218 /* UIStoryBoard+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryBoard+Utils.swift"; sourceTree = "<group>"; };
+		4B30D4DD2396781100882218 /* NoteDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailsViewController.swift; sourceTree = "<group>"; };
 		4B706D1423965AA500E1BA37 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B706D1723965AA500E1BA37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4B706D1B23965AA500E1BA37 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4B706D1B23965AA500E1BA37 /* NotesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListViewController.swift; sourceTree = "<group>"; };
 		4B706D1E23965AA500E1BA37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4B706D2123965AA500E1BA37 /* Notes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Notes.xcdatamodel; sourceTree = "<group>"; };
 		4B706D2323965AA600E1BA37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -37,6 +49,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B30D4CF239667EA00882218 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4B30D4CD239667E100882218 /* Note.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4B30D4D0239667F200882218 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4B30D4D523966B1A00882218 /* Cell */,
+				4B706D1B23965AA500E1BA37 /* NotesListViewController.swift */,
+				4B30D4DD2396781100882218 /* NoteDetailsViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		4B30D4D123966A6600882218 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4B30D4D223966A8100882218 /* NSObject+Utils.swift */,
+				4B30D4D82396720700882218 /* DateToString+Utils.swift */,
+				4B30D4DB2396777600882218 /* UIStoryBoard+Utils.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4B30D4D423966A9D00882218 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				4B706D2023965AA500E1BA37 /* Notes.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		4B30D4D523966B1A00882218 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				4B30D4D623966B2C00882218 /* NoteCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		4B706D0B23965AA500E1BA37 = {
 			isa = PBXGroup;
 			children = (
@@ -57,12 +113,14 @@
 			isa = PBXGroup;
 			children = (
 				4B706D1723965AA500E1BA37 /* AppDelegate.swift */,
-				4B706D1B23965AA500E1BA37 /* ViewController.swift */,
+				4B30D4CF239667EA00882218 /* Model */,
+				4B30D4D0239667F200882218 /* ViewControllers */,
+				4B30D4D123966A6600882218 /* Extensions */,
+				4B30D4D423966A9D00882218 /* CoreData */,
 				4B706D1D23965AA500E1BA37 /* Main.storyboard */,
 				4B706D2323965AA600E1BA37 /* Assets.xcassets */,
 				4B706D2523965AA600E1BA37 /* LaunchScreen.storyboard */,
 				4B706D2823965AA600E1BA37 /* Info.plist */,
-				4B706D2023965AA500E1BA37 /* Notes.xcdatamodeld */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -77,6 +135,7 @@
 				4B706D1023965AA500E1BA37 /* Sources */,
 				4B706D1123965AA500E1BA37 /* Frameworks */,
 				4B706D1223965AA500E1BA37 /* Resources */,
+				4B30D4DA239676D000882218 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -133,14 +192,40 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4B30D4DA239676D000882218 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\nERRORTAG=\"ERROR:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$|($ERRORTAG).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\" | perl -p -e \"s/($ERRORTAG)/ error: \\$1/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4B706D1023965AA500E1BA37 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B706D1C23965AA500E1BA37 /* ViewController.swift in Sources */,
+				4B706D1C23965AA500E1BA37 /* NotesListViewController.swift in Sources */,
 				4B706D1823965AA500E1BA37 /* AppDelegate.swift in Sources */,
+				4B30D4DE2396781100882218 /* NoteDetailsViewController.swift in Sources */,
+				4B30D4D323966A8100882218 /* NSObject+Utils.swift in Sources */,
 				4B706D2223965AA500E1BA37 /* Notes.xcdatamodeld in Sources */,
+				4B30D4CE239667E100882218 /* Note.swift in Sources */,
+				4B30D4D92396720700882218 /* DateToString+Utils.swift in Sources */,
+				4B30D4DC2396777600882218 /* UIStoryBoard+Utils.swift in Sources */,
+				4B30D4D723966B2C00882218 /* NoteCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +371,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Notes/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -303,6 +389,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Notes/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
