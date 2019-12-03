@@ -24,10 +24,10 @@ final class NotesListViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.title = "Notes"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapOnAddButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapOnCreateButton))
     }
     
-    @objc private func didTapOnAddButton() {
+    @objc private func didTapOnCreateButton() {
         /// push to the empty VC with textView
     }
 }
@@ -55,7 +55,7 @@ extension NotesListViewController: UITableViewDelegate {
             assertionFailure()
             return
         }
-        controller.note = notes[indexPath.item]
+        controller.noteDetails = notes[indexPath.item]
         navigationController?.pushViewController(controller, animated: true)
     }
     

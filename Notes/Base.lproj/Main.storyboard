@@ -61,6 +61,7 @@
                                 </connections>
                             </tableViewCell>
                         </prototypes>
+                        <sections/>
                     </tableView>
                     <navigationItem key="navigationItem" id="swt-yd-t9A"/>
                     <connections>
@@ -78,9 +79,48 @@
                     <view key="view" contentMode="scaleToFill" id="zqj-4A-tor">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pdB-75-OSj">
+                                <rect key="frame" x="20" y="59" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7VJ-jV-Wfu">
+                                <rect key="frame" x="20" y="121" width="374" height="721"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a38-ZC-bSL">
+                                <rect key="frame" x="20" y="85" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="7VJ-jV-Wfu" firstAttribute="leading" secondItem="udP-8o-pQc" secondAttribute="leading" constant="20" id="1sJ-nG-cua"/>
+                            <constraint firstItem="udP-8o-pQc" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="a38-ZC-bSL" secondAttribute="trailing" constant="352" id="8bV-6d-wpc"/>
+                            <constraint firstItem="7VJ-jV-Wfu" firstAttribute="top" secondItem="a38-ZC-bSL" secondAttribute="bottom" constant="15" id="H0i-Ao-shq"/>
+                            <constraint firstItem="pdB-75-OSj" firstAttribute="top" secondItem="udP-8o-pQc" secondAttribute="top" constant="15" id="LOp-r9-pyi"/>
+                            <constraint firstItem="a38-ZC-bSL" firstAttribute="top" secondItem="pdB-75-OSj" secondAttribute="bottom" constant="5" id="Vbv-DR-D97"/>
+                            <constraint firstItem="a38-ZC-bSL" firstAttribute="leading" secondItem="udP-8o-pQc" secondAttribute="leading" constant="20" id="bxn-sq-GFp"/>
+                            <constraint firstItem="udP-8o-pQc" firstAttribute="bottom" secondItem="7VJ-jV-Wfu" secondAttribute="bottom" constant="20" id="dG8-Lc-Lsl"/>
+                            <constraint firstItem="pdB-75-OSj" firstAttribute="leading" secondItem="udP-8o-pQc" secondAttribute="leading" constant="20" id="iEn-8h-NMc"/>
+                            <constraint firstItem="udP-8o-pQc" firstAttribute="trailing" secondItem="7VJ-jV-Wfu" secondAttribute="trailing" constant="20" id="ore-MP-WFO"/>
+                            <constraint firstItem="udP-8o-pQc" firstAttribute="trailing" secondItem="pdB-75-OSj" secondAttribute="trailing" constant="20" id="xWh-CX-NbE"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="udP-8o-pQc"/>
                     </view>
+                    <connections>
+                        <outlet property="noteDate" destination="a38-ZC-bSL" id="Rgo-Md-Upi"/>
+                        <outlet property="noteDescription" destination="7VJ-jV-Wfu" id="abx-Z2-G81"/>
+                        <outlet property="noteTitle" destination="pdB-75-OSj" id="okw-XS-UIH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="klG-U7-r0X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
