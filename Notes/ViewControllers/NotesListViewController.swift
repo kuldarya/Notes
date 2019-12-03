@@ -11,11 +11,7 @@ import UIKit
 final class NotesListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
 
-    var notes = Note.getDefaultData() {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    var notes = Note.getDefaultData()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +56,11 @@ extension NotesListViewController: UITableViewDelegate {
         }
         controller.note = notes[indexPath.item]
         navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        notes.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)
     }
 }
 
