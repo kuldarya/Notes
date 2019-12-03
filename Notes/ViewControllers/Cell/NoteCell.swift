@@ -32,9 +32,17 @@ final class NoteCell: UITableViewCell {
     
     var note: Note? {
         didSet {
-            noteTitle.text = note?.title
-            noteBodyText.text = note?.description
-            noteDate.text = note?.date.toString(dateFormat: "dd-MM")
+            if let note = note {
+                noteTitle.text = note.title
+                
+                if note.description.isEmpty {
+                    noteBodyText.text = "No additional text"
+                } else {
+                    noteBodyText.text = note.description
+                }
+                
+                noteDate.text = note.date.toString()
+            }
         }
     }
 }
