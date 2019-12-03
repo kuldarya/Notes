@@ -28,7 +28,11 @@ final class NotesListViewController: UIViewController {
     }
     
     @objc private func didTapOnCreateButton() {
-        /// push to the empty VC with textView
+        guard let controller = UIStoryboard.mainStoryboard?.instantiateVC(NoteDetailsViewController.self) else {
+            assertionFailure()
+            return
+        }
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
 
@@ -55,7 +59,7 @@ extension NotesListViewController: UITableViewDelegate {
             assertionFailure()
             return
         }
-        controller.noteDetails = notes[indexPath.item]
+        controller.note = notes[indexPath.item]
         navigationController?.pushViewController(controller, animated: true)
     }
     

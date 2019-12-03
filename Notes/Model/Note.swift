@@ -9,11 +9,14 @@
 import Foundation
 
 class Note {
-    var title: String
-    var description: String
-    var date: Date
+    private(set) var id: UUID
+    private(set) var title: String
+    private(set) var description: String
+    private(set) var date: Date
     
+    //TODO: add noteID
     init(title: String, description: String, date: Date) {
+        self.id = UUID()
         self.title = title
         self.description = description
         self.date = date

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5ho-Ry-YIx">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -80,15 +81,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pdB-75-OSj">
-                                <rect key="frame" x="20" y="59" width="374" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mOC-2S-Mc4">
+                                <rect key="frame" x="20" y="54" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jdw-aw-Q4A">
+                                <rect key="frame" x="20" y="80" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wpd-Qd-PD1">
+                                <rect key="frame" x="20" y="134" width="374" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="7VJ-jV-Wfu">
-                                <rect key="frame" x="15" y="90" width="379" height="752"/>
+                                <rect key="frame" x="20" y="158" width="374" height="728"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam lib</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -96,22 +109,31 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="7VJ-jV-Wfu" firstAttribute="leading" secondItem="udP-8o-pQc" secondAttribute="leading" constant="15" id="1sJ-nG-cua"/>
-                            <constraint firstItem="pdB-75-OSj" firstAttribute="top" secondItem="udP-8o-pQc" secondAttribute="top" constant="15" id="LOp-r9-pyi"/>
-                            <constraint firstItem="7VJ-jV-Wfu" firstAttribute="top" secondItem="pdB-75-OSj" secondAttribute="bottom" constant="10" id="Pr8-1b-k1u"/>
-                            <constraint firstItem="udP-8o-pQc" firstAttribute="bottom" secondItem="7VJ-jV-Wfu" secondAttribute="bottom" constant="20" id="dG8-Lc-Lsl"/>
-                            <constraint firstItem="pdB-75-OSj" firstAttribute="leading" secondItem="udP-8o-pQc" secondAttribute="leading" constant="20" id="iEn-8h-NMc"/>
-                            <constraint firstItem="udP-8o-pQc" firstAttribute="trailing" secondItem="7VJ-jV-Wfu" secondAttribute="trailing" constant="20" id="ore-MP-WFO"/>
-                            <constraint firstItem="udP-8o-pQc" firstAttribute="trailing" secondItem="pdB-75-OSj" secondAttribute="trailing" constant="20" id="xWh-CX-NbE"/>
+                            <constraint firstItem="udP-8o-pQc" firstAttribute="trailing" secondItem="jdw-aw-Q4A" secondAttribute="trailing" constant="20" id="4Vf-92-v5E"/>
+                            <constraint firstItem="Wpd-Qd-PD1" firstAttribute="top" secondItem="jdw-aw-Q4A" secondAttribute="bottom" constant="20" id="85A-yi-6ov"/>
+                            <constraint firstItem="Wpd-Qd-PD1" firstAttribute="leading" secondItem="udP-8o-pQc" secondAttribute="leading" constant="20" id="DoB-tj-0UO"/>
+                            <constraint firstItem="7VJ-jV-Wfu" firstAttribute="top" secondItem="Wpd-Qd-PD1" secondAttribute="bottom" constant="3" id="Ehs-b1-eFL"/>
+                            <constraint firstItem="mOC-2S-Mc4" firstAttribute="leading" secondItem="udP-8o-pQc" secondAttribute="leading" constant="20" id="F7N-O0-nGq"/>
+                            <constraint firstItem="udP-8o-pQc" firstAttribute="trailing" secondItem="7VJ-jV-Wfu" secondAttribute="trailing" constant="20" id="Jyd-QZ-Fgv"/>
+                            <constraint firstItem="jdw-aw-Q4A" firstAttribute="top" secondItem="mOC-2S-Mc4" secondAttribute="bottom" constant="5" id="P1Q-Py-xSO"/>
+                            <constraint firstItem="jdw-aw-Q4A" firstAttribute="leading" secondItem="udP-8o-pQc" secondAttribute="leading" constant="20" id="X27-9i-Iih"/>
+                            <constraint firstAttribute="bottom" secondItem="7VJ-jV-Wfu" secondAttribute="bottom" constant="10" id="cfT-UJ-vX3"/>
+                            <constraint firstItem="mOC-2S-Mc4" firstAttribute="top" secondItem="udP-8o-pQc" secondAttribute="top" constant="10" id="etv-5U-dgv"/>
+                            <constraint firstItem="udP-8o-pQc" firstAttribute="trailing" secondItem="Wpd-Qd-PD1" secondAttribute="trailing" constant="20" id="iOF-nW-UHm"/>
+                            <constraint firstItem="7VJ-jV-Wfu" firstAttribute="leading" secondItem="udP-8o-pQc" secondAttribute="leading" constant="20" id="kHj-sW-UOo"/>
+                            <constraint firstItem="udP-8o-pQc" firstAttribute="trailing" secondItem="mOC-2S-Mc4" secondAttribute="trailing" constant="20" id="lnS-ns-VCh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="udP-8o-pQc"/>
                     </view>
                     <connections>
-                        <outlet property="noteDescription" destination="7VJ-jV-Wfu" id="abx-Z2-G81"/>
-                        <outlet property="noteTitle" destination="pdB-75-OSj" id="okw-XS-UIH"/>
+                        <outlet property="noteDescriptionLabel" destination="Wpd-Qd-PD1" id="p9E-0b-hlO"/>
+                        <outlet property="noteDescriptionTextView" destination="7VJ-jV-Wfu" id="abx-Z2-G81"/>
+                        <outlet property="noteTitleLabel" destination="mOC-2S-Mc4" id="LkQ-bm-LzL"/>
+                        <outlet property="noteTitleTextField" destination="jdw-aw-Q4A" id="mQ5-ho-NIV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="klG-U7-r0X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <customObject id="tQe-wd-3px" customClass="NotesListDesigner" customModule="Notes" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="1744" y="90"/>
         </scene>

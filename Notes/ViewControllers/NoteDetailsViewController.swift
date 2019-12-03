@@ -9,29 +9,37 @@
 import UIKit
 
 final class NoteDetailsViewController: UIViewController {
-    @IBOutlet private weak var noteTitle: UILabel! {
+    @IBOutlet private weak var noteTitleLabel: UILabel! {
+        willSet {
+            newValue.font = .boldSystemFont(ofSize: 16)
+            newValue.text = "Note Title"
+        }
+    }
+    @IBOutlet private weak var noteTitleTextField: UITextField! {
         willSet {
             newValue.font = .boldSystemFont(ofSize: 16)
             newValue.textColor = .black
-            newValue.numberOfLines = 0
         }
     }
-    
-    @IBOutlet private weak var noteDate: UILabel! {
+    @IBOutlet private weak var noteDescriptionLabel: UILabel! {
         willSet {
-            newValue.font = .systemFont(ofSize: 13)
-            newValue.textColor = .gray
+            newValue.font = .boldSystemFont(ofSize: 16)
+            newValue.text = "Note Text"
         }
     }
-    
-    @IBOutlet private weak var noteDescription: UITextView! {
+    @IBOutlet private weak var noteDescriptionTextView: UITextView! {
         willSet {
-            newValue.font = .systemFont(ofSize: 14)
+            newValue.font = .systemFont(ofSize: 16)
             newValue.textColor = .black
+            newValue.layer.borderColor = UIColor.lightGray.cgColor
+            newValue.layer.borderWidth = 1
+            newValue.clipsToBounds = true
+            newValue.layer.cornerRadius = 10.0
+
         }
     }
     
-    var noteDetails: Note? {
+    var note: Note? {
         didSet {
             configureView()
         }
@@ -39,20 +47,56 @@ final class NoteDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
+        noteTitleTextField.delegate = self
+        noteDescriptionTextView.delegate = self
+
+        initialSetup()
         configureView()
-        
     }
     
-    func configureView() {
-        if let note = noteDetails {
-            if let titleLabel = noteTitle, let dateLabel = noteDate, let textViewDescription = noteDescription {
+    override func viewDidLayoutSubviews() {
+      super.viewDidLayoutSubviews()
+
+      noteDescriptionTextView.contentOffset = .zero
+    }
+    
+    private func initialSetup() {
+        navigationItem.rightBarButtonItem = nil
+        noteTitleTextField.text = ""
+        noteDescriptionTextView.text = ""
+    }
+    
+    private func configureView() {
+        if let note = note {
+            if let titleLabel = noteTitleTextField, let textViewDescription = noteDescriptionTextView {
                 titleLabel.text = note.title
-                dateLabel.text = note.date.toString(dateFormat: "dd-MM-yyyy")
                 textViewDescription.text = note.description
             }
         }
     }
     
-    
+    private func showDoneButton() {
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(saveToCoreData))
+        navigationItem.rightBarButtonItem = doneButton
+    }
+        
+    @objc func saveToCoreData() {
+        navigationItem.rightBarButtonItem = nil
+
+    }
 }
+
+extension NoteDetailsViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        showDoneButton()
+    }
+}
+
+extension NoteDetailsViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        showDoneButton()
+    }
+}
+
+
