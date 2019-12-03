@@ -9,9 +9,11 @@
 import Foundation
 
 extension Date {
-    func toString(dateFormat format: String) -> String {
+    func toString() -> String {
+        let now = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-        return dateFormatter.string(from: self)
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        return dateFormatter.string(from: now)
     }
 }
