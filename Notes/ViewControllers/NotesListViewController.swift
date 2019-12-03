@@ -19,11 +19,12 @@ final class NotesListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        createAddButton()
+        setupNavigationBar()
     }
     
-    private func createAddButton() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapOnAddButton))
+    private func setupNavigationBar() {
+        navigationItem.title = "Notes"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapOnAddButton))
     }
     
     @objc private func didTapOnAddButton() {
