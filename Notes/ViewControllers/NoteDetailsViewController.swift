@@ -48,10 +48,10 @@ final class NoteDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         noteTitleTextField.delegate = self
         noteBodyTextView.delegate = self
-
+        
         initialSetup()
         configureView()
         hideKeyboardWhenTappedAround()
@@ -154,7 +154,9 @@ final class NoteDetailsViewController: UIViewController {
     private func showAlert(title: String, text: String) {
         // TODO: improve implementation
         let alertController = UIAlertController(title: title, message: text, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default)
+        let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
+            self.noteBodyTextView.becomeFirstResponder()
+        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
