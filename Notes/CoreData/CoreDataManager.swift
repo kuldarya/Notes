@@ -55,6 +55,8 @@ final class CoreDataManager {
         }
     }
     
+    // MARK: - Core Data Loading support
+    
     func loadNotesFromCoreData(managedContext: NSManagedObjectContext) -> [Note] {
         var returnedNotes = [Note]()
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
@@ -73,6 +75,24 @@ final class CoreDataManager {
         }
         count = returnedNotes.count
         return returnedNotes
+    }
+    
+    func loadNoteFromCoreData(noteId: UUID, managedContext: NSManagedObjectContext) -> Note? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
+        let noteIdPredicate = NSPredicate(format: "id = %@", noteId as CVarArg)
+        fetchRequest.predicate = noteIdPredicate
+        
+        do {
+            let notesFromCoreData = try managedContext.fetch(fetchRequest)
+            let noteManagedObject = notesFromCoreData[0] as! NSManagedObject
+            return Note.init(id: noteManagedObject.value(forKey: "id") as! UUID,
+                             title: noteManagedObject.value(forKey: "title" ) as! String,
+                             textBody: noteManagedObject.value(forKey: "textBody") as! String,
+                             date: noteManagedObject.value(forKey: "date") as! Date)
+        } catch let error as NSError {
+            assertionFailure("Object cannot be loaded from CoreData. \(error)")
+            return nil
+        }
     }
 }
 

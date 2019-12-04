@@ -27,7 +27,8 @@ final class NotesListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        // TODO: loadNotesFromCoreData()
+        notes = CoreDataManager.shared.loadNotesFromCoreData(managedContext: managedContext)
+        tableView.reloadData()
     }
     
     private func setupNavigationBar() {
@@ -55,8 +56,11 @@ extension NotesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        cell.note = notes[indexPath.item]
-       
+        if let object = NoteStorageManager.shared.loadNote(at: indexPath.row) {
+            cell.noteTitle.text = object.title
+            cell.noteBodyText.text = object.textBody
+            cell.noteDate.text = object.date.toString()
+        }
         return cell
     }
 }
@@ -67,7 +71,8 @@ extension NotesListViewController: UITableViewDelegate {
             assertionFailure()
             return
         }
-        controller.note = notes[indexPath.item]
+        let object = NoteStorageManager.shared.loadNote(at: indexPath.row)
+        controller.note = object
         navigationController?.pushViewController(controller, animated: true)
     }
     

@@ -9,21 +9,21 @@
 import UIKit
 
 final class NoteCell: UITableViewCell {
-    @IBOutlet private weak var noteTitle: UILabel! {
+    @IBOutlet weak var noteTitle: UILabel! {
         willSet {
             newValue.font = .boldSystemFont(ofSize: 16)
             newValue.textColor = .black
         }
     }
     
-    @IBOutlet private weak var noteBodyText: UILabel! {
+    @IBOutlet weak var noteBodyText: UILabel! {
         willSet {
             newValue.font = .systemFont(ofSize: 14)
             newValue.textColor = .gray
         }
     }
     
-    @IBOutlet private weak var noteDate: UILabel! {
+    @IBOutlet weak var noteDate: UILabel! {
         willSet {
             newValue.font = .boldSystemFont(ofSize: 14)
             newValue.textColor = .gray
