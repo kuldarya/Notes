@@ -95,9 +95,24 @@ final class NoteDetailsViewController: UIViewController {
     private func saveNote() {
         if let noteTitleText = noteTitleTextField.text,
             let noteBodyText = noteBodyTextView.text {
-            let note = Note(title: noteTitleText, textBody: noteBodyText)
-            NoteStorageManager.shared.saveNote(note: note)
+            if noteTitleText.isEmpty && noteBodyText.isEmpty {
+                showAlert(title: "Your note cannot be empty.", text: "Please add a title or a text body of your note ;)")
+            } else {
+                let note = Note(title: noteTitleText, textBody: noteBodyText)
+                NoteStorageManager.shared.saveNote(note: note)
+            }
+        
         }
+    }
+    
+    private func showAlert(title: String, text: String) {
+        // TODO: improve implementation
+        let alertController = UIAlertController(title: title, message: text, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
