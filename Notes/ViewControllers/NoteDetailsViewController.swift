@@ -77,13 +77,16 @@ final class NoteDetailsViewController: UIViewController {
     }
     
     private func showDoneButton() {
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(saveToCoreData))
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(prepareToSaveToCoreData))
         navigationItem.rightBarButtonItem = doneButton
     }
         
-    @objc func saveToCoreData() {
+    @objc func prepareToSaveToCoreData() {
+        noteTitleTextField.resignFirstResponder()
+        noteDescriptionTextView.resignFirstResponder()
         navigationItem.rightBarButtonItem = nil
-
+        
+        ///save to coredata
     }
 }
 
