@@ -58,4 +58,33 @@ final class NoteStorageManager {
         }
         return nil
     }
+    
+    // Mark: - Deleting from the list
+    
+    func deleteNote(at index: Int) {
+        if managedContextHasBeenSet {
+            if index < 0 || index > currentIndex - 1 {
+                assertionFailure("Note cannot be found")
+                return
+            }
+            guard let noteUUID = noteIndexToId[index] else {
+                assertionFailure()
+                return
+            }
+            
+            CoreDataManager.shared.deleteNote(noteId: noteUUID, managedContext: managedContext)
+            
+            if (index < currentIndex - 1) {
+                for i in index...currentIndex - 2 {
+                    noteIndexToId[i] = noteIndexToId[i + 1]
+                }
+                noteIndexToId.removeValue(forKey: currentIndex)
+                currentIndex -= 1
+            }
+        }
+    }
+    
+    func count() -> Int {
+        return CoreDataManager.shared.count
+    }
 }

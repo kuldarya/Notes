@@ -27,6 +27,8 @@ final class NotesListViewController: UIViewController {
         super.viewWillAppear(true)
         
         notes = CoreDataManager.shared.fetchAllNotes(managedContext: managedContext)
+        //TODO: Save new note to the top tableview row
+        
         tableView.reloadData()
     }
     
@@ -46,7 +48,7 @@ final class NotesListViewController: UIViewController {
 
 extension NotesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notes.count
+        return NoteStorageManager.shared.count()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -56,8 +58,18 @@ extension NotesListViewController: UITableViewDataSource {
         }
         
         if let object = NoteStorageManager.shared.loadNote(at: indexPath.row) {
-            cell.noteTitle.text = object.title
-            cell.noteBodyText.text = object.textBody
+            if object.title.isEmpty {
+                cell.noteTitle.text = "No title"
+            } else {
+                cell.noteTitle.text = object.title
+            }
+            
+            if object.textBody.isEmpty {
+                cell.noteBodyText.text = "No additional text"
+            } else {
+                cell.noteBodyText.text = object.textBody
+            }
+            
             cell.noteDate.text = object.date.toString()
         }
         return cell
@@ -76,8 +88,10 @@ extension NotesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        notes.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)
+        if editingStyle == .delete {
+            NoteStorageManager.shared.deleteNote(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 }
 
