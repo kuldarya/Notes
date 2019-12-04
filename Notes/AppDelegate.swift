@@ -14,6 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        CoreDataManager.shared.managedContext.automaticallyMergesChangesFromParent = true
+        
         return true
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        try? CoreDataManager.shared.saveContext()
     }
 }
