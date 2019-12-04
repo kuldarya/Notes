@@ -22,7 +22,7 @@ final class NoteStorageManager {
     func setManagedContext(managedObjectContext: NSManagedObjectContext) {
         managedContext = managedObjectContext
         managedContextHasBeenSet = true
-        let notes = CoreDataManager.shared.loadNotesFromCoreData(managedContext: managedContext)
+        let notes = CoreDataManager.shared.fetchAllNotes(managedContext: managedContext)
         currentIndex = CoreDataManager.shared.count
         for (index, note) in notes.enumerated() {
             noteIndexToId[index] = note.id
@@ -52,7 +52,7 @@ final class NoteStorageManager {
             let note: Note?
             
             if let noteId = noteUUID {
-                note = CoreDataManager.shared.loadNoteFromCoreData(noteId: noteId, managedContext: managedContext)
+                note = CoreDataManager.shared.fetchNote(noteId: noteId, managedContext: managedContext)
                 return note
             }
         }

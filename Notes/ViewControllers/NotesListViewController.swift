@@ -20,14 +20,13 @@ final class NotesListViewController: UIViewController {
         tableView.delegate = self
         
         NoteStorageManager.shared.setManagedContext(managedObjectContext: managedContext)
-        
         setupNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        notes = CoreDataManager.shared.loadNotesFromCoreData(managedContext: managedContext)
+        notes = CoreDataManager.shared.fetchAllNotes(managedContext: managedContext)
         tableView.reloadData()
     }
     

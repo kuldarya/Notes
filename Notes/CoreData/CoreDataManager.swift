@@ -42,6 +42,7 @@ final class CoreDataManager {
             return
         }
         let newNote = NSManagedObject(entity: entity, insertInto: managedContext)
+        
         newNote.setValue(note.id, forKey: "id")
         newNote.setValue(note.title, forKey: "title")
         newNote.setValue(note.textBody, forKey: "textBody")
@@ -55,29 +56,30 @@ final class CoreDataManager {
         }
     }
     
-    // MARK: - Core Data Loading support
+    // MARK: - Core Data Fetching support
     
-    func loadNotesFromCoreData(managedContext: NSManagedObjectContext) -> [Note] {
-        var returnedNotes = [Note]()
+    func fetchAllNotes(managedContext: NSManagedObjectContext) -> [Note] {
+        var notes = [Note]()
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
         
         do {
-            let fetchedNotesFromCoreData = try managedContext.fetch(fetchRequest)
-            fetchedNotesFromCoreData.forEach { fetchRequestResult in
-                let noteEntity = fetchRequestResult as! NSManagedObject
-                returnedNotes.append(Note.init(id: noteEntity.value(forKey: "id") as! UUID,
-                                               title: noteEntity.value(forKey: "title") as! String,
-                                               textBody: noteEntity.value(forKey: "textBody") as! String,
-                                               date: noteEntity.value(forKey: "date") as! Date))
+            let fetchedNotes = try managedContext.fetch(fetchRequest)
+            
+            fetchedNotes.forEach { result in
+                let noteEntity = result as! NSManagedObject
+                notes.append(Note.init(id: noteEntity.value(forKey: "id") as! UUID,
+                                       title: noteEntity.value(forKey: "title") as! String,
+                                       textBody: noteEntity.value(forKey: "textBody") as! String,
+                                       date: noteEntity.value(forKey: "date") as! Date))
             }
         } catch let error as NSError {
             print("Could not read. \(error), \(error.userInfo)")
         }
-        count = returnedNotes.count
-        return returnedNotes
+        count = notes.count
+        return notes.reversed()
     }
     
-    func loadNoteFromCoreData(noteId: UUID, managedContext: NSManagedObjectContext) -> Note? {
+    func fetchNote(noteId: UUID, managedContext: NSManagedObjectContext) -> Note? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
         let noteIdPredicate = NSPredicate(format: "id = %@", noteId as CVarArg)
         fetchRequest.predicate = noteIdPredicate
