@@ -9,6 +9,8 @@
 import UIKit
 
 final class NoteDetailsViewController: UIViewController {
+    @IBOutlet private weak var scrollView: UIScrollView!
+    
     @IBOutlet private weak var noteTitleLabel: UILabel! {
         willSet {
             newValue.font = .boldSystemFont(ofSize: 16)
@@ -55,10 +57,54 @@ final class NoteDetailsViewController: UIViewController {
         hideKeyboardWhenTappedAround()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        registerNotifications()
+    }
+    
+    deinit {
+        unregisterNotifications()
+    }
+    
     override func viewDidLayoutSubviews() {
       super.viewDidLayoutSubviews()
 
       noteBodyTextView.contentOffset = .zero
+    }
+    
+    private func registerNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+    }
+    
+    private func unregisterNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        let userInfo = notification.userInfo!
+        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            noteBodyTextView.contentInset = UIEdgeInsets.zero
+        } else {
+            noteBodyTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        noteBodyTextView.scrollIndicatorInsets = noteBodyTextView.contentInset
+        let selectedRange = noteBodyTextView.selectedRange
+        noteBodyTextView.scrollRangeToVisible(selectedRange)
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        scrollView.contentInset.bottom = 0
     }
     
     private func initialSetup() {
@@ -144,5 +190,3 @@ extension NoteDetailsViewController: UITextFieldDelegate {
         return count <= 35
     }
 }
-
-
