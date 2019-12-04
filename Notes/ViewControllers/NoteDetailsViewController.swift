@@ -52,6 +52,7 @@ final class NoteDetailsViewController: UIViewController {
 
         initialSetup()
         configureView()
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewDidLayoutSubviews() {
