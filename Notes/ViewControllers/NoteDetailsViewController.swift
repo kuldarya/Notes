@@ -71,7 +71,7 @@ final class NoteDetailsViewController: UIViewController {
         if let note = note {
             if let titleLabel = noteTitleTextField, let textViewDescription = noteDescriptionTextView {
                 titleLabel.text = note.title
-                textViewDescription.text = note.description
+                textViewDescription.text = note.textBody
             }
         }
     }
