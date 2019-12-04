@@ -10,8 +10,8 @@ import UIKit
 
 final class NotesListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
-
-    var notes = Note.getDefaultData()
+    let managedContext = CoreDataManager.shared.managedContext
+    var notes = [Note]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +19,15 @@ final class NotesListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
+        NoteStorageManager.shared.setManagedContext(managedObjectContext: managedContext)
+        
         setupNavigationBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        // TODO: loadNotesFromCoreData()
     }
     
     private func setupNavigationBar() {

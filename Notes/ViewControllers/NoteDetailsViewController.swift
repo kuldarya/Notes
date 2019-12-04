@@ -21,13 +21,13 @@ final class NoteDetailsViewController: UIViewController {
             newValue.textColor = .black
         }
     }
-    @IBOutlet private weak var noteDescriptionLabel: UILabel! {
+    @IBOutlet private weak var noteBodyLabel: UILabel! {
         willSet {
             newValue.font = .boldSystemFont(ofSize: 16)
             newValue.text = "Note Text"
         }
     }
-    @IBOutlet private weak var noteDescriptionTextView: UITextView! {
+    @IBOutlet private weak var noteBodyTextView: UITextView! {
         willSet {
             newValue.font = .systemFont(ofSize: 16)
             newValue.textColor = .black
@@ -35,7 +35,6 @@ final class NoteDetailsViewController: UIViewController {
             newValue.layer.borderWidth = 1
             newValue.clipsToBounds = true
             newValue.layer.cornerRadius = 10.0
-
         }
     }
     
@@ -49,7 +48,7 @@ final class NoteDetailsViewController: UIViewController {
         super.viewDidLoad()
                 
         noteTitleTextField.delegate = self
-        noteDescriptionTextView.delegate = self
+        noteBodyTextView.delegate = self
 
         initialSetup()
         configureView()
@@ -58,18 +57,18 @@ final class NoteDetailsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
       super.viewDidLayoutSubviews()
 
-      noteDescriptionTextView.contentOffset = .zero
+      noteBodyTextView.contentOffset = .zero
     }
     
     private func initialSetup() {
         navigationItem.rightBarButtonItem = nil
         noteTitleTextField.text = ""
-        noteDescriptionTextView.text = ""
+        noteBodyTextView.text = ""
     }
     
     private func configureView() {
         if let note = note {
-            if let titleLabel = noteTitleTextField, let textViewDescription = noteDescriptionTextView {
+            if let titleLabel = noteTitleTextField, let textViewDescription = noteBodyTextView {
                 titleLabel.text = note.title
                 textViewDescription.text = note.textBody
             }
@@ -77,16 +76,27 @@ final class NoteDetailsViewController: UIViewController {
     }
     
     private func showDoneButton() {
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(prepareToSaveToCoreData))
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(saveNoteToCoreData))
         navigationItem.rightBarButtonItem = doneButton
     }
-        
-    @objc func prepareToSaveToCoreData() {
+    
+    @objc func saveNoteToCoreData() {
+        prepareToSaveNote()
+        saveNote()
+    }
+    
+    private func prepareToSaveNote() {
         noteTitleTextField.resignFirstResponder()
-        noteDescriptionTextView.resignFirstResponder()
+        noteBodyTextView.resignFirstResponder()
         navigationItem.rightBarButtonItem = nil
-        
-        ///save to coredata
+    }
+    
+    private func saveNote() {
+        if let noteTitleText = noteTitleTextField.text,
+            let noteBodyText = noteBodyTextView.text {
+            let note = Note(title: noteTitleText, textBody: noteBodyText)
+            NoteStorageManager.shared.saveNote(note: note)
+        }
     }
 }
 
