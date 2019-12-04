@@ -27,7 +27,9 @@ final class NotesListViewController: UIViewController {
         super.viewWillAppear(true)
         
         notes = CoreDataManager.shared.fetchAllNotes(managedContext: managedContext)
-        //TODO: Save new note to the top tableview row
+        /// TODO: Newly saved note goes to the bottom of the tableView,
+        /// sortDescriptor doesn't work when coming back from NoteDetailsViewController.
+        /// However it shows newly created notes correctly (latest modified at top) at app launch.
         
         tableView.reloadData()
     }
