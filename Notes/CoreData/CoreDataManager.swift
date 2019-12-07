@@ -45,7 +45,7 @@ final class CoreDataManager {
         
         newNote.setValue(note.noteId, forKey: "noteId")
         newNote.setValue(note.noteTitle, forKey: "noteTitle")
-        newNote.setValue(note.noteBody, forKey: "noteBody")
+        newNote.setValue(note.noteTextBody, forKey: "noteBody")
         newNote.setValue(note.noteTimeStamp, forKey: "noteTimeStamp")
         
         do {
@@ -74,14 +74,14 @@ final class CoreDataManager {
                 
                 guard let id = noteEntity.value(forKey: "noteId") as? UUID,
                     let title = noteEntity.value(forKey: "noteTitle") as? String,
-                    let body = noteEntity.value(forKey: "noteBody") as? String,
+                    let textBody = noteEntity.value(forKey: "noteBody") as? String,
                     let timeStamp = noteEntity.value(forKey: "noteTimeStamp") as? Date else {
                         return
                 }
                 
                 notes.append(Note.init(noteId: id,
                                        noteTitle: title,
-                                       noteBody: body,
+                                       noteTextBody: textBody,
                                        noteTimeStamp: timeStamp))
             }
         } catch let error as NSError {
@@ -102,13 +102,13 @@ final class CoreDataManager {
             
             guard let id = noteManagedObject.value(forKey: "noteId") as? UUID,
                 let title = noteManagedObject.value(forKey: "noteTitle") as? String,
-                let body = noteManagedObject.value(forKey: "noteBody") as? String,
+                let textBody = noteManagedObject.value(forKey: "noteBody") as? String,
                 let timeStamp = noteManagedObject.value(forKey: "noteTimeStamp") as? Date  else {
                     return nil
             }
             return Note.init(noteId: id,
                              noteTitle: title,
-                             noteBody: body,
+                             noteTextBody: textBody,
                              noteTimeStamp: timeStamp)
             
         } catch let error as NSError {

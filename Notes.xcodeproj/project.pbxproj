@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4B30D4CE239667E100882218 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30D4CD239667E100882218 /* Note.swift */; };
 		4B30D4D323966A8100882218 /* NSObject+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30D4D223966A8100882218 /* NSObject+Utils.swift */; };
-		4B30D4D723966B2C00882218 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30D4D623966B2C00882218 /* NoteCell.swift */; };
+		4B30D4D723966B2C00882218 /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30D4D623966B2C00882218 /* NoteTableViewCell.swift */; };
 		4B30D4D92396720700882218 /* DateToString+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30D4D82396720700882218 /* DateToString+Utils.swift */; };
 		4B30D4DC2396777600882218 /* UIStoryBoard+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30D4DB2396777600882218 /* UIStoryBoard+Utils.swift */; };
 		4B30D4DE2396781100882218 /* NoteDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B30D4DD2396781100882218 /* NoteDetailsViewController.swift */; };
@@ -30,7 +30,7 @@
 /* Begin PBXFileReference section */
 		4B30D4CD239667E100882218 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		4B30D4D223966A8100882218 /* NSObject+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Utils.swift"; sourceTree = "<group>"; };
-		4B30D4D623966B2C00882218 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
+		4B30D4D623966B2C00882218 /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 		4B30D4D82396720700882218 /* DateToString+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateToString+Utils.swift"; sourceTree = "<group>"; };
 		4B30D4DB2396777600882218 /* UIStoryBoard+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryBoard+Utils.swift"; sourceTree = "<group>"; };
 		4B30D4DD2396781100882218 /* NoteDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailsViewController.swift; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 		4B30D4D523966B1A00882218 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				4B30D4D623966B2C00882218 /* NoteCell.swift */,
+				4B30D4D623966B2C00882218 /* NoteTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -257,7 +257,7 @@
 				4B7A98DF239814BE009FD582 /* ViewController+Utils.swift in Sources */,
 				4B30D4DC2396777600882218 /* UIStoryBoard+Utils.swift in Sources */,
 				4B30D4E62397A08900882218 /* CoreDataManager.swift in Sources */,
-				4B30D4D723966B2C00882218 /* NoteCell.swift in Sources */,
+				4B30D4D723966B2C00882218 /* NoteTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

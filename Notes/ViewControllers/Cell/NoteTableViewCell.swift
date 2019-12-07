@@ -1,5 +1,5 @@
 //
-//  NoteCell.swift
+//  NoteTableViewCell.swift
 //  Notes
 //
 //  Created by Darya Kuliashova on 12/3/19.
@@ -8,22 +8,22 @@
 
 import UIKit
 
-final class NoteCell: UITableViewCell {
-    @IBOutlet weak var noteTitle: UILabel! {
+final class NoteTableViewCell: UITableViewCell {
+    @IBOutlet weak var titleLabel: UILabel! {
         willSet {
             newValue.font = .boldSystemFont(ofSize: 16)
             newValue.textColor = .black
         }
     }
     
-    @IBOutlet weak var noteBodyText: UILabel! {
+    @IBOutlet weak var textBodyLabel: UILabel! {
         willSet {
             newValue.font = .systemFont(ofSize: 14)
             newValue.textColor = .gray
         }
     }
     
-    @IBOutlet weak var noteDate: UILabel! {
+    @IBOutlet weak var timeStampLabel: UILabel! {
         willSet {
             newValue.font = .boldSystemFont(ofSize: 14)
             newValue.textColor = .gray
@@ -33,15 +33,15 @@ final class NoteCell: UITableViewCell {
     var note: Note? {
         didSet {
             if let note = note {
-                noteTitle.text = note.noteTitle
+                titleLabel.text = note.noteTitle
                 
-                if note.noteBody.isEmpty {
-                    noteBodyText.text = "No additional text"
+                if note.noteTextBody.isEmpty {
+                    textBodyLabel.text = "No additional text"
                 } else {
-                    noteBodyText.text = note.noteBody
+                    textBodyLabel.text = note.noteTextBody
                 }
                 
-                noteDate.text = note.noteTimeStamp.toString()
+                timeStampLabel.text = note.noteTimeStamp.toString()
             }
         }
     }

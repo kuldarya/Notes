@@ -54,25 +54,25 @@ extension NotesListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteCell.className, for: indexPath) as? NoteCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoteTableViewCell.className, for: indexPath) as? NoteTableViewCell else {
             assertionFailure()
             return UITableViewCell()
         }
         
         if let object = NoteStorageManager.shared.loadNote(at: indexPath.row) {
             if object.noteTitle.isEmpty {
-                cell.noteTitle.text = "No title"
+                cell.titleLabel.text = "No title"
             } else {
-                cell.noteTitle.text = object.noteTitle
+                cell.titleLabel.text = object.noteTitle
             }
             
-            if object.noteBody.isEmpty {
-                cell.noteBodyText.text = "No additional text"
+            if object.noteTextBody.isEmpty {
+                cell.textBodyLabel.text = "No additional text"
             } else {
-                cell.noteBodyText.text = object.noteBody
+                cell.textBodyLabel.text = object.noteTextBody
             }
             
-            cell.noteDate.text = object.noteTimeStamp.toString()
+            cell.timeStampLabel.text = object.noteTimeStamp.toString()
         }
         return cell
     }

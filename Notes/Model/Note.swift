@@ -8,23 +8,23 @@
 
 import Foundation
 
-class Note {
+final class Note {
     let noteId: UUID
     let noteTitle: String
-    let noteBody: String
+    let noteTextBody: String
     let noteTimeStamp: Date
     
-    init(noteId: UUID, noteTitle: String, noteBody: String, noteTimeStamp: Date) {
+    init(noteId: UUID, noteTitle: String, noteTextBody: String, noteTimeStamp: Date) {
         self.noteId = noteId
         self.noteTitle = noteTitle
-        self.noteBody = noteBody
+        self.noteTextBody = noteTextBody
         self.noteTimeStamp = noteTimeStamp
     }
     
-    init(noteTitle: String, noteBody: String) {
+    init(noteTitle: String, noteTextBody: String) {
         self.noteId = UUID()
         self.noteTitle = noteTitle
-        self.noteBody = noteBody
+        self.noteTextBody = noteTextBody
         self.noteTimeStamp = Date()
     }
 }
