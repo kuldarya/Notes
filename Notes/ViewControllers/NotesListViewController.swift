@@ -60,19 +60,19 @@ extension NotesListViewController: UITableViewDataSource {
         }
         
         if let object = NoteStorageManager.shared.loadNote(at: indexPath.row) {
-            if object.title.isEmpty {
+            if object.noteTitle.isEmpty {
                 cell.noteTitle.text = "No title"
             } else {
-                cell.noteTitle.text = object.title
+                cell.noteTitle.text = object.noteTitle
             }
             
-            if object.textBody.isEmpty {
+            if object.noteBody.isEmpty {
                 cell.noteBodyText.text = "No additional text"
             } else {
-                cell.noteBodyText.text = object.textBody
+                cell.noteBodyText.text = object.noteBody
             }
             
-            cell.noteDate.text = object.date.toString()
+            cell.noteDate.text = object.noteTimeStamp.toString()
         }
         return cell
     }

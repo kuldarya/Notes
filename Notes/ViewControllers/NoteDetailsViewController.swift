@@ -116,8 +116,8 @@ final class NoteDetailsViewController: UIViewController {
     private func configureView() {
         if let note = note {
             if let titleLabel = noteTitleTextField, let textViewDescription = noteBodyTextView {
-                titleLabel.text = note.title
-                textViewDescription.text = note.textBody
+                titleLabel.text = note.noteTitle
+                textViewDescription.text = note.noteBody
             }
         }
     }
@@ -144,7 +144,7 @@ final class NoteDetailsViewController: UIViewController {
             if noteTitleText.isEmpty && noteBodyText.isEmpty {
                 showAlert(title: "Your note cannot be empty.", text: "Please add a title or a text body of your note ;)")
             } else {
-                let note = Note(title: noteTitleText, textBody: noteBodyText)
+                let note = Note(noteTitle: noteTitleText, noteBody: noteBodyText)
                 NoteStorageManager.shared.saveNote(note: note)
             }
         

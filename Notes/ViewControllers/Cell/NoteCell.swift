@@ -33,15 +33,15 @@ final class NoteCell: UITableViewCell {
     var note: Note? {
         didSet {
             if let note = note {
-                noteTitle.text = note.title
+                noteTitle.text = note.noteTitle
                 
-                if note.textBody.isEmpty {
+                if note.noteBody.isEmpty {
                     noteBodyText.text = "No additional text"
                 } else {
-                    noteBodyText.text = note.textBody
+                    noteBodyText.text = note.noteBody
                 }
                 
-                noteDate.text = note.date.toString()
+                noteDate.text = note.noteTimeStamp.toString()
             }
         }
     }

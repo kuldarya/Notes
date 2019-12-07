@@ -43,10 +43,10 @@ final class CoreDataManager {
         }
         let newNote = NSManagedObject(entity: entity, insertInto: managedContext)
         
-        newNote.setValue(note.id, forKey: "id")
-        newNote.setValue(note.title, forKey: "title")
-        newNote.setValue(note.textBody, forKey: "textBody")
-        newNote.setValue(note.date, forKey: "date")
+        newNote.setValue(note.noteId, forKey: "noteId")
+        newNote.setValue(note.noteTitle, forKey: "noteTitle")
+        newNote.setValue(note.noteBody, forKey: "noteBody")
+        newNote.setValue(note.noteTimeStamp, forKey: "noteTimeStamp")
         
         do {
             try CoreDataManager.shared.saveContext()
@@ -62,7 +62,7 @@ final class CoreDataManager {
         var notes = [Note]()
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
         
-        let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: "noteTimeStamp", ascending: false)
         let sortDescriptors = [sortDescriptor]
         fetchRequest.sortDescriptors = sortDescriptors
         
@@ -71,10 +71,6 @@ final class CoreDataManager {
             
             fetchedNotes.forEach { result in
                 let noteEntity = result as! NSManagedObject
-                notes.append(Note.init(id: noteEntity.value(forKey: "id") as! UUID,
-                                       title: noteEntity.value(forKey: "title") as! String,
-                                       textBody: noteEntity.value(forKey: "textBody") as! String,
-                                       date: noteEntity.value(forKey: "date") as! Date))
             }
         } catch let error as NSError {
             assertionFailure("Could not fetch notes from CoreData: \(error), \(error.userInfo)")
@@ -85,16 +81,16 @@ final class CoreDataManager {
     
     func fetchNote(noteId: UUID, managedContext: NSManagedObjectContext) -> Note? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
-        let noteIdPredicate = NSPredicate(format: "id = %@", noteId as CVarArg)
+        let noteIdPredicate = NSPredicate(format: "noteId = %@", noteId as CVarArg)
         fetchRequest.predicate = noteIdPredicate
         
         do {
             let notesFromCoreData = try managedContext.fetch(fetchRequest)
             let noteManagedObject = notesFromCoreData[0] as! NSManagedObject
-            return Note.init(id: noteManagedObject.value(forKey: "id") as! UUID,
-                             title: noteManagedObject.value(forKey: "title" ) as! String,
-                             textBody: noteManagedObject.value(forKey: "textBody") as! String,
-                             date: noteManagedObject.value(forKey: "date") as! Date)
+            return Note.init(noteId: noteManagedObject.value(forKey: "noteId") as! UUID,
+                             noteTitle: noteManagedObject.value(forKey: "noteTitle" ) as! String,
+                             noteBody: noteManagedObject.value(forKey: "noteBody") as! String,
+                             noteTimeStamp: noteManagedObject.value(forKey: "noteTimeStamp") as! Date)
         } catch let error as NSError {
             assertionFailure("Note cannot be fetched from CoreData: \(error), \(error.userInfo)")
             return nil
@@ -106,7 +102,7 @@ final class CoreDataManager {
     func deleteNote(noteId: UUID, managedContext: NSManagedObjectContext) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
         let noteCVarArg = noteId as CVarArg
-        let noteIdPredicate = NSPredicate(format: "id == %@", noteCVarArg)
+        let noteIdPredicate = NSPredicate(format: "noteId == %@", noteCVarArg)
         fetchRequest.predicate = noteIdPredicate
         
         do {

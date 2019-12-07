@@ -25,7 +25,7 @@ final class NoteStorageManager {
         let notes = CoreDataManager.shared.fetchAllNotes(managedContext: managedContext)
         currentIndex = CoreDataManager.shared.count
         for (index, note) in notes.enumerated() {
-            noteIndexToId[index] = note.id
+            noteIndexToId[index] = note.noteId
         }
     }
     
@@ -33,7 +33,7 @@ final class NoteStorageManager {
     
     func saveNote(note: Note) {
         if managedContextHasBeenSet {
-            noteIndexToId[currentIndex] = note.id
+            noteIndexToId[currentIndex] = note.noteId
             CoreDataManager.shared.saveNoteToCoreData(note: note, managedContext: managedContext)
             currentIndex += 1
         }
