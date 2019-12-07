@@ -24,6 +24,7 @@
 		4B7A98DB2397BA70009FD582 /* NoteEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A98D92397BA70009FD582 /* NoteEntity+CoreDataProperties.swift */; };
 		4B7A98DD2397C6AF009FD582 /* NoteStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A98DC2397C6AF009FD582 /* NoteStorageManager.swift */; };
 		4B7A98DF239814BE009FD582 /* ViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A98DE239814BE009FD582 /* ViewController+Utils.swift */; };
+		4B7A9901239BAC03009FD582 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A9900239BAC03009FD582 /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		4B7A98D92397BA70009FD582 /* NoteEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4B7A98DC2397C6AF009FD582 /* NoteStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStorageManager.swift; sourceTree = "<group>"; };
 		4B7A98DE239814BE009FD582 /* ViewController+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Utils.swift"; sourceTree = "<group>"; };
+		4B7A9900239BAC03009FD582 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				4B706D1723965AA500E1BA37 /* AppDelegate.swift */,
+				4B7A9900239BAC03009FD582 /* SceneDelegate.swift */,
 				4B706D1D23965AA500E1BA37 /* Main.storyboard */,
 				4B30D4CF239667EA00882218 /* Model */,
 				4B30D4D0239667F200882218 /* ViewControllers */,
@@ -245,6 +248,7 @@
 				4B7A98DD2397C6AF009FD582 /* NoteStorageManager.swift in Sources */,
 				4B706D1823965AA500E1BA37 /* AppDelegate.swift in Sources */,
 				4B30D4DE2396781100882218 /* NoteDetailsViewController.swift in Sources */,
+				4B7A9901239BAC03009FD582 /* SceneDelegate.swift in Sources */,
 				4B30D4D323966A8100882218 /* NSObject+Utils.swift in Sources */,
 				4B30D4F22397B7E800882218 /* NoteEntity.xcdatamodeld in Sources */,
 				4B30D4CE239667E100882218 /* Note.swift in Sources */,
@@ -329,7 +333,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -383,7 +387,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -399,7 +403,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Notes/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -417,7 +421,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Notes/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
