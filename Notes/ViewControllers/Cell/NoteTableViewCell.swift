@@ -29,20 +29,4 @@ final class NoteTableViewCell: UITableViewCell {
             newValue.textColor = .gray
         }
     }
-    
-    var note: Note? {
-        didSet {
-            if let note = note {
-                titleLabel.text = note.noteTitle
-                
-                if note.noteTextBody.isEmpty {
-                    textBodyLabel.text = "No additional text"
-                } else {
-                    textBodyLabel.text = note.noteTextBody
-                }
-                
-                timeStampLabel.text = note.noteTimeStamp.toString()
-            }
-        }
-    }
 }

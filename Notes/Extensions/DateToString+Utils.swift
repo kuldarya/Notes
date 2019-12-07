@@ -10,10 +10,8 @@ import Foundation
 
 extension Date {
     func toString() -> String {
-        let now = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone.current
         dateFormatter.dateFormat = "dd/MM/yyyy"
-        return dateFormatter.string(from: now)
+        return dateFormatter.string(from: self)
     }
 }

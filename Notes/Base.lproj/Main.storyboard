@@ -149,11 +149,11 @@
                         <viewLayoutGuide key="safeArea" id="udP-8o-pQc"/>
                     </view>
                     <connections>
-                        <outlet property="noteBodyLabel" destination="M9E-2c-sad" id="1oT-q6-oxz"/>
-                        <outlet property="noteBodyTextView" destination="ORm-dm-tZM" id="c17-IF-eGd"/>
-                        <outlet property="noteTitleLabel" destination="Zld-7e-ANe" id="dNS-oV-aBR"/>
-                        <outlet property="noteTitleTextField" destination="za6-5W-2Rc" id="jSp-8z-2ew"/>
                         <outlet property="scrollView" destination="W76-IS-BWo" id="tn0-FP-RWi"/>
+                        <outlet property="textBodyLabel" destination="M9E-2c-sad" id="ocO-Bq-G3U"/>
+                        <outlet property="textBodyTextView" destination="ORm-dm-tZM" id="hIh-48-IWn"/>
+                        <outlet property="titleLabel" destination="Zld-7e-ANe" id="aK7-lZ-MWS"/>
+                        <outlet property="titleTextField" destination="za6-5W-2Rc" id="Njd-yE-fA0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="klG-U7-r0X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

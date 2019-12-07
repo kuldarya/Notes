@@ -10,7 +10,7 @@ import UIKit
 
 final class NotesListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
-    let managedContext = CoreDataManager.shared.managedContext
+    
     var notes = [Note]()
     
     override func viewDidLoad() {
@@ -19,17 +19,15 @@ final class NotesListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        NoteStorageManager.shared.setManagedContext(managedObjectContext: managedContext)
+        NoteStorageManager.shared.setManagedContext(managedObjectContext: CoreDataManager.shared.managedContext)
         setupNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        notes = CoreDataManager.shared.fetchAllNotes(managedContext: managedContext)
-        /// TODO: Newly saved note goes to the bottom of the tableView,
-        /// sortDescriptor doesn't work when coming back from NoteDetailsViewController.
-        /// However it shows newly created notes correctly (latest modified at top) at app launch.
+        //TODO: show fresh notes at top
+        notes = CoreDataManager.shared.fetchAllNotes(managedContext: CoreDataManager.shared.managedContext)
         
         tableView.reloadData()
     }
@@ -50,7 +48,8 @@ final class NotesListViewController: UIViewController {
 
 extension NotesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return NoteStorageManager.shared.count()
+        return notes.count
+        // TODO: изменение текущей заметки создает новую, а не модифицирует старую, общий каунт растет
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

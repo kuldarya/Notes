@@ -11,25 +11,25 @@ import UIKit
 final class NoteDetailsViewController: UIViewController {
     @IBOutlet private weak var scrollView: UIScrollView!
     
-    @IBOutlet private weak var noteTitleLabel: UILabel! {
+    @IBOutlet private weak var titleLabel: UILabel! {
         willSet {
             newValue.font = .boldSystemFont(ofSize: 16)
             newValue.text = "Note Title"
         }
     }
-    @IBOutlet private weak var noteTitleTextField: UITextField! {
+    @IBOutlet private weak var titleTextField: UITextField! {
         willSet {
             newValue.font = .boldSystemFont(ofSize: 16)
             newValue.textColor = .black
         }
     }
-    @IBOutlet private weak var noteBodyLabel: UILabel! {
+    @IBOutlet private weak var textBodyLabel: UILabel! {
         willSet {
             newValue.font = .boldSystemFont(ofSize: 16)
             newValue.text = "Note Text"
         }
     }
-    @IBOutlet private weak var noteBodyTextView: UITextView! {
+    @IBOutlet private weak var textBodyTextView: UITextView! {
         willSet {
             newValue.font = .systemFont(ofSize: 16)
             newValue.textColor = .black
@@ -40,107 +40,94 @@ final class NoteDetailsViewController: UIViewController {
         }
     }
     
-    var note: Note? {
-        didSet {
-            configureView()
-        }
-    }
+    var note: Note?
+    
+    private lazy var doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(saveNoteToCoreData))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        noteTitleTextField.delegate = self
-        noteBodyTextView.delegate = self
+        titleTextField.delegate = self
+        textBodyTextView.delegate = self
         
         initialSetup()
         configureView()
+        subscribeToKeyboardNotifications()
         hideKeyboardWhenTappedAround()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
-        registerNotifications()
-    }
-    
-    deinit {
-        unregisterNotifications()
-    }
-    
-    override func viewDidLayoutSubviews() {
-      super.viewDidLayoutSubviews()
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
 
-      noteBodyTextView.contentOffset = .zero
+        unsubscribeFromKeyboardNotifications()
     }
     
-    private func registerNotifications() {
+    private func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShow),
+                                               selector: #selector(keyboardWillShowNotification(_:)),
                                                name: UIResponder.keyboardWillShowNotification,
                                                object: nil)
-    }
-    
-    private func unregisterNotifications() {
+
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide),
+                                               selector: #selector(keyboardWillHideNotification(_:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
     }
     
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        let userInfo = notification.userInfo!
-        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+    private func unsubscribeFromKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillShowNotification,
+                                                  object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: nil)
+    }
 
-        if notification.name == UIResponder.keyboardWillHideNotification {
-            noteBodyTextView.contentInset = UIEdgeInsets.zero
-        } else {
-            noteBodyTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+    @objc private func keyboardWillShowNotification(_ notification: Notification) {
+        guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+            return
         }
-        noteBodyTextView.scrollIndicatorInsets = noteBodyTextView.contentInset
-        let selectedRange = noteBodyTextView.selectedRange
-        noteBodyTextView.scrollRangeToVisible(selectedRange)
+        let keyboardHeight = keyboardFrame.cgRectValue.height
+        
+        textBodyTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+        textBodyTextView.scrollIndicatorInsets = textBodyTextView.contentInset
+        textBodyTextView.scrollRangeToVisible(textBodyTextView.selectedRange)
     }
 
-    @objc func keyboardWillHide(notification: NSNotification) {
-        scrollView.contentInset.bottom = 0
+    @objc private func keyboardWillHideNotification(_ notification: Notification) {
+        view.endEditing(true)
     }
-    
+
     private func initialSetup() {
         navigationItem.rightBarButtonItem = nil
-        noteTitleTextField.text = ""
-        noteBodyTextView.text = ""
+        titleTextField.text = ""
+        textBodyTextView.text = ""
     }
     
     private func configureView() {
+        //TODO:
         if let note = note {
-            if let titleLabel = noteTitleTextField, let textViewDescription = noteBodyTextView {
+            if let titleLabel = titleTextField, let textViewDescription = textBodyTextView {
                 titleLabel.text = note.noteTitle
                 textViewDescription.text = note.noteTextBody
             }
         }
     }
-    
-    private func showDoneButton() {
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(saveNoteToCoreData))
-        navigationItem.rightBarButtonItem = doneButton
-    }
-    
-    @objc func saveNoteToCoreData() {
+
+    @objc private func saveNoteToCoreData() {
         prepareToSaveNote()
         saveNote()
     }
     
     private func prepareToSaveNote() {
-        noteTitleTextField.resignFirstResponder()
-        noteBodyTextView.resignFirstResponder()
+        titleTextField.resignFirstResponder()
+        textBodyTextView.resignFirstResponder()
         navigationItem.rightBarButtonItem = nil
     }
     
     private func saveNote() {
-        if let noteTitleText = noteTitleTextField.text,
-            let noteBodyText = noteBodyTextView.text {
+        if let noteTitleText = titleTextField.text,
+            let noteBodyText = textBodyTextView.text {
             if noteTitleText.isEmpty && noteBodyText.isEmpty {
                 showAlert(title: "Your note cannot be empty.", text: "Please add a title or a text body of your note ;)")
             } else {
@@ -155,7 +142,7 @@ final class NoteDetailsViewController: UIViewController {
         // TODO: improve implementation
         let alertController = UIAlertController(title: title, message: text, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
-            self.noteBodyTextView.becomeFirstResponder()
+            self.textBodyTextView.becomeFirstResponder()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(okAction)
@@ -166,18 +153,18 @@ final class NoteDetailsViewController: UIViewController {
 
 extension NoteDetailsViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        showDoneButton()
+        navigationItem.rightBarButtonItem = doneButton
     }
 }
 
 extension NoteDetailsViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        showDoneButton()
+        navigationItem.rightBarButtonItem = doneButton
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == noteTitleTextField {
-            noteBodyTextView.becomeFirstResponder()
+        if textField == titleTextField {
+            textBodyTextView.becomeFirstResponder()
         }
         return true
     }
