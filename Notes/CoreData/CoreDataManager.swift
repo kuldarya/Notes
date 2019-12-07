@@ -71,6 +71,18 @@ final class CoreDataManager {
             
             fetchedNotes.forEach { result in
                 let noteEntity = result as! NSManagedObject
+                
+                guard let id = noteEntity.value(forKey: "noteId") as? UUID,
+                    let title = noteEntity.value(forKey: "noteTitle") as? String,
+                    let body = noteEntity.value(forKey: "noteBody") as? String,
+                    let timeStamp = noteEntity.value(forKey: "noteTimeStamp") as? Date else {
+                        return
+                }
+                
+                notes.append(Note.init(noteId: id,
+                                       noteTitle: title,
+                                       noteBody: body,
+                                       noteTimeStamp: timeStamp))
             }
         } catch let error as NSError {
             assertionFailure("Could not fetch notes from CoreData: \(error), \(error.userInfo)")
@@ -87,10 +99,18 @@ final class CoreDataManager {
         do {
             let notesFromCoreData = try managedContext.fetch(fetchRequest)
             let noteManagedObject = notesFromCoreData[0] as! NSManagedObject
-            return Note.init(noteId: noteManagedObject.value(forKey: "noteId") as! UUID,
-                             noteTitle: noteManagedObject.value(forKey: "noteTitle" ) as! String,
-                             noteBody: noteManagedObject.value(forKey: "noteBody") as! String,
-                             noteTimeStamp: noteManagedObject.value(forKey: "noteTimeStamp") as! Date)
+            
+            guard let id = noteManagedObject.value(forKey: "noteId") as? UUID,
+                let title = noteManagedObject.value(forKey: "noteTitle") as? String,
+                let body = noteManagedObject.value(forKey: "noteBody") as? String,
+                let timeStamp = noteManagedObject.value(forKey: "noteTimeStamp") as? Date  else {
+                    return nil
+            }
+            return Note.init(noteId: id,
+                             noteTitle: title,
+                             noteBody: body,
+                             noteTimeStamp: timeStamp)
+            
         } catch let error as NSError {
             assertionFailure("Note cannot be fetched from CoreData: \(error), \(error.userInfo)")
             return nil
