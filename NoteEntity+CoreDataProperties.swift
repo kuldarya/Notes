@@ -16,9 +16,9 @@ extension NoteEntity {
         return NSFetchRequest<NoteEntity>(entityName: "NoteEntity")
     }
 
-    @NSManaged public var noteTimeStamp: Date?
-    @NSManaged public var noteId: UUID?
-    @NSManaged public var noteBody: String?
-    @NSManaged public var noteTitle: String?
+    @NSManaged public var timeStamp: Date?
+    @NSManaged public var id: UUID?
+    @NSManaged public var textBody: String?
+    @NSManaged public var title: String?
 
 }

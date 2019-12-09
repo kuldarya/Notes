@@ -37,11 +37,11 @@ final class CoreDataManager {
     
     func saveNote(note: Note) {
         let request: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "noteId = %@", note.id as CVarArg)
+        request.predicate = NSPredicate(format: "id = %@", note.id as CVarArg)
         
         if let savedNote = try? managedContext.fetch(request).first {
-            savedNote.noteTitle = note.title
-            savedNote.noteBody = note.textBody
+            savedNote.title = note.title
+            savedNote.textBody = note.textBody
         } else {
             guard let entity = NSEntityDescription.entity(forEntityName: NoteEntity.className, in: managedContext) else {
                 assertionFailure()
@@ -49,10 +49,10 @@ final class CoreDataManager {
             }
             let noteMO = NSManagedObject(entity: entity, insertInto: managedContext)
             
-            noteMO.setValue(note.id, forKey: #keyPath(NoteEntity.noteId))
-            noteMO.setValue(note.title, forKey: #keyPath(NoteEntity.noteTitle))
-            noteMO.setValue(note.textBody, forKey: #keyPath(NoteEntity.noteBody))
-            noteMO.setValue(note.timeStamp, forKey: #keyPath(NoteEntity.noteTimeStamp))
+            noteMO.setValue(note.id, forKey: #keyPath(NoteEntity.id))
+            noteMO.setValue(note.title, forKey: #keyPath(NoteEntity.title))
+            noteMO.setValue(note.textBody, forKey: #keyPath(NoteEntity.textBody))
+            noteMO.setValue(note.timeStamp, forKey: #keyPath(NoteEntity.timeStamp))
         }
         
         do {
@@ -68,17 +68,17 @@ final class CoreDataManager {
         var notes = [Note]()
         let request: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
         
-        let sortDescriptor = [NSSortDescriptor(key: #keyPath(NoteEntity.noteTimeStamp), ascending: false)]
+        let sortDescriptor = [NSSortDescriptor(key: #keyPath(NoteEntity.timeStamp), ascending: false)]
         request.sortDescriptors = sortDescriptor
         
         do {
             let fetchedNotes = try managedContext.fetch(request)
             fetchedNotes.forEach { result in
                 
-                guard let id = result.value(forKey: #keyPath(NoteEntity.noteId)) as? UUID,
-                    let title = result.value(forKey: #keyPath(NoteEntity.noteTitle)) as? String,
-                    let textBody = result.value(forKey: #keyPath(NoteEntity.noteBody)) as? String,
-                    let timeStamp = result.value(forKey: #keyPath(NoteEntity.noteTimeStamp)) as? Date else {
+                guard let id = result.value(forKey: #keyPath(NoteEntity.id)) as? UUID,
+                    let title = result.value(forKey: #keyPath(NoteEntity.title)) as? String,
+                    let textBody = result.value(forKey: #keyPath(NoteEntity.textBody)) as? String,
+                    let timeStamp = result.value(forKey: #keyPath(NoteEntity.timeStamp)) as? Date else {
                         return
                 }
                 notes.append(Note.init(id: id,
@@ -96,7 +96,7 @@ final class CoreDataManager {
     
     func deleteNote(note: Note) {
         let request: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "noteId = %@", note.id as CVarArg)
+        request.predicate = NSPredicate(format: "id = %@", note.id as CVarArg)
         
         do {
             let notes = try managedContext.fetch(request)
