@@ -42,7 +42,10 @@ final class NoteDetailsViewController: UIViewController {
     
     var note: Note?
     
-    private lazy var doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(saveNoteToCoreData))
+    //TODO: what's the best way?
+    private var doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(saveNoteToCoreData))
+    
+    //MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +55,7 @@ final class NoteDetailsViewController: UIViewController {
         
         initialSetup()
         configureView()
+        
         subscribeToKeyboardNotifications()
         hideKeyboardWhenTappedAround()
     }
@@ -61,6 +65,8 @@ final class NoteDetailsViewController: UIViewController {
 
         unsubscribeFromKeyboardNotifications()
     }
+    
+    //MARK: - Keyboard Observers
     
     private func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self,
@@ -83,6 +89,21 @@ final class NoteDetailsViewController: UIViewController {
                                                   object: nil)
     }
 
+    //MARK: - Setup
+    
+    private func initialSetup() {
+        navigationItem.rightBarButtonItem = nil
+        titleTextField.text = ""
+        textBodyTextView.text = ""
+    }
+    
+    private func configureView() {
+        if let note = note {
+            titleTextField.text = note.noteTitle
+            textBodyTextView.text = note.noteTextBody
+        }
+    }
+    
     @objc private func keyboardWillShowNotification(_ notification: Notification) {
         guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
@@ -97,23 +118,7 @@ final class NoteDetailsViewController: UIViewController {
     @objc private func keyboardWillHideNotification(_ notification: Notification) {
         view.endEditing(true)
     }
-
-    private func initialSetup() {
-        navigationItem.rightBarButtonItem = nil
-        titleTextField.text = ""
-        textBodyTextView.text = ""
-    }
     
-    private func configureView() {
-        //TODO:
-        if let note = note {
-            if let titleLabel = titleTextField, let textViewDescription = textBodyTextView {
-                titleLabel.text = note.noteTitle
-                textViewDescription.text = note.noteTextBody
-            }
-        }
-    }
-
     @objc private func saveNoteToCoreData() {
         prepareToSaveNote()
         saveNote()
@@ -126,6 +131,7 @@ final class NoteDetailsViewController: UIViewController {
     }
     
     private func saveNote() {
+        //TODO: не эдитит текущую, а создает каждый раз новую!!!
         if let noteTitleText = titleTextField.text,
             let noteBodyText = textBodyTextView.text {
             if noteTitleText.isEmpty && noteBodyText.isEmpty {
@@ -134,20 +140,15 @@ final class NoteDetailsViewController: UIViewController {
                 let note = Note(noteTitle: noteTitleText, noteTextBody: noteBodyText)
                 NoteStorageManager.shared.saveNote(note: note)
             }
-        
         }
     }
     
     private func showAlert(title: String, text: String) {
         // TODO: improve implementation
         let alertController = UIAlertController(title: title, message: text, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
-            self.textBodyTextView.becomeFirstResponder()
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let okAction = UIAlertAction(title: "OK", style: .default)
         alertController.addAction(okAction)
-        alertController.addAction(cancelAction)
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
