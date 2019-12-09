@@ -70,8 +70,8 @@ extension NotesListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            CoreDataManager.shared.deleteNote(note: notes[indexPath.row])
             notes.remove(at: indexPath.row)
-            //TODO: delete from CoreDara here!
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

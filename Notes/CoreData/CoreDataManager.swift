@@ -66,13 +66,13 @@ final class CoreDataManager {
     
     func fetchNotes() -> [Note] {
         var notes = [Note]()
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: NoteEntity.className)
+        let request: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
         
         let sortDescriptor = [NSSortDescriptor(key: #keyPath(NoteEntity.noteTimeStamp), ascending: false)]
-        fetchRequest.sortDescriptors = sortDescriptor
+        request.sortDescriptors = sortDescriptor
         
         do {
-            let fetchedNotes = try managedContext.fetch(fetchRequest)
+            let fetchedNotes = try managedContext.fetch(request)
             fetchedNotes.forEach { result in
                 
                 guard let id = result.value(forKey: #keyPath(NoteEntity.noteId)) as? UUID,
@@ -94,5 +94,23 @@ final class CoreDataManager {
 
     // MARK: - Core Data Deleting support
     
-
+    func deleteNote(note: Note) {
+        let request: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "noteId = %@", note.id as CVarArg)
+        
+        do {
+            let notes = try managedContext.fetch(request)
+            for note in notes {
+                managedContext.delete(note)
+            }
+        } catch let error as NSError {
+            assertionFailure("Could not fetch notes from CoreData: \(error), \(error.userInfo)")
+        }
+        
+        do {
+            try saveContext()
+        } catch let error as NSError {
+            assertionFailure("Could not save notes from CoreData: \(error), \(error.userInfo)")
+        }
+    }
 }
