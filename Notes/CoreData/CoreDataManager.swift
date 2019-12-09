@@ -10,7 +10,6 @@ import CoreData
 
 final class CoreDataManager {
     static let shared = CoreDataManager()
-    var count = 0
     
     // MARK: - Core Data stack
 
@@ -36,21 +35,28 @@ final class CoreDataManager {
         try managedContext.save()
     }
     
-    func saveNoteToCoreData(note: Note, managedContext: NSManagedObjectContext) {
-        guard let entity = NSEntityDescription.entity(forEntityName: "NoteEntity", in: managedContext) else {
-            assertionFailure()
-            return
-        }
-        let newNote = NSManagedObject(entity: entity, insertInto: managedContext)
+    func saveNote(note: Note) {
+        let request: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "noteId = %@", note.id as CVarArg)
         
-        newNote.setValue(note.noteId, forKey: "noteId")
-        newNote.setValue(note.noteTitle, forKey: "noteTitle")
-        newNote.setValue(note.noteTextBody, forKey: "noteBody")
-        newNote.setValue(note.noteTimeStamp, forKey: "noteTimeStamp")
+        if let savedNote = try? managedContext.fetch(request).first {
+            savedNote.noteTitle = note.title
+            savedNote.noteBody = note.textBody
+        } else {
+            guard let entity = NSEntityDescription.entity(forEntityName: NoteEntity.className, in: managedContext) else {
+                assertionFailure()
+                return
+            }
+            let noteMO = NSManagedObject(entity: entity, insertInto: managedContext)
+            
+            noteMO.setValue(note.id, forKey: #keyPath(NoteEntity.noteId))
+            noteMO.setValue(note.title, forKey: #keyPath(NoteEntity.noteTitle))
+            noteMO.setValue(note.textBody, forKey: #keyPath(NoteEntity.noteBody))
+            noteMO.setValue(note.timeStamp, forKey: #keyPath(NoteEntity.noteTimeStamp))
+        }
         
         do {
-            try CoreDataManager.shared.saveContext()
-            count += 1
+            try saveContext()
         } catch let error as NSError {
             assertionFailure("Could not save note to CoreData: \(error), \(error.userInfo)")
         }
@@ -58,86 +64,35 @@ final class CoreDataManager {
     
     // MARK: - Core Data Fetching support
     
-    func fetchAllNotes(managedContext: NSManagedObjectContext) -> [Note] {
+    func fetchNotes() -> [Note] {
         var notes = [Note]()
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: NoteEntity.className)
         
-        let sortDescriptor = NSSortDescriptor(key: "noteTimeStamp", ascending: false)
-        let sortDescriptors = [sortDescriptor]
-        fetchRequest.sortDescriptors = sortDescriptors
+        let sortDescriptor = [NSSortDescriptor(key: #keyPath(NoteEntity.noteTimeStamp), ascending: false)]
+        fetchRequest.sortDescriptors = sortDescriptor
         
         do {
             let fetchedNotes = try managedContext.fetch(fetchRequest)
-            
             fetchedNotes.forEach { result in
-                let noteEntity = result as! NSManagedObject
                 
-                guard let id = noteEntity.value(forKey: "noteId") as? UUID,
-                    let title = noteEntity.value(forKey: "noteTitle") as? String,
-                    let textBody = noteEntity.value(forKey: "noteBody") as? String,
-                    let timeStamp = noteEntity.value(forKey: "noteTimeStamp") as? Date else {
+                guard let id = result.value(forKey: #keyPath(NoteEntity.noteId)) as? UUID,
+                    let title = result.value(forKey: #keyPath(NoteEntity.noteTitle)) as? String,
+                    let textBody = result.value(forKey: #keyPath(NoteEntity.noteBody)) as? String,
+                    let timeStamp = result.value(forKey: #keyPath(NoteEntity.noteTimeStamp)) as? Date else {
                         return
                 }
-                
-                notes.append(Note.init(noteId: id,
-                                       noteTitle: title,
-                                       noteTextBody: textBody,
-                                       noteTimeStamp: timeStamp))
+                notes.append(Note.init(id: id,
+                                       title: title,
+                                       textBody: textBody,
+                                       timeStamp: timeStamp))
             }
         } catch let error as NSError {
             assertionFailure("Could not fetch notes from CoreData: \(error), \(error.userInfo)")
         }
-        count = notes.count
         return notes
     }
-    
-    func fetchNote(noteId: UUID, managedContext: NSManagedObjectContext) -> Note? {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
-        let noteIdPredicate = NSPredicate(format: "noteId = %@", noteId as CVarArg)
-        fetchRequest.predicate = noteIdPredicate
-        
-        do {
-            let notesFromCoreData = try managedContext.fetch(fetchRequest)
-            let noteManagedObject = notesFromCoreData[0] as! NSManagedObject
-            
-            guard let id = noteManagedObject.value(forKey: "noteId") as? UUID,
-                let title = noteManagedObject.value(forKey: "noteTitle") as? String,
-                let textBody = noteManagedObject.value(forKey: "noteBody") as? String,
-                let timeStamp = noteManagedObject.value(forKey: "noteTimeStamp") as? Date  else {
-                    return nil
-            }
-            return Note.init(noteId: id,
-                             noteTitle: title,
-                             noteTextBody: textBody,
-                             noteTimeStamp: timeStamp)
-            
-        } catch let error as NSError {
-            assertionFailure("Note cannot be fetched from CoreData: \(error), \(error.userInfo)")
-            return nil
-        }
-    }
-    
+
     // MARK: - Core Data Deleting support
     
-    func deleteNote(noteId: UUID, managedContext: NSManagedObjectContext) {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NoteEntity")
-        let noteCVarArg = noteId as CVarArg
-        let noteIdPredicate = NSPredicate(format: "noteId == %@", noteCVarArg)
-        fetchRequest.predicate = noteIdPredicate
-        
-        do {
-            let notesFromCoreData = try managedContext.fetch(fetchRequest)
-            let noteToDelete = notesFromCoreData[0] as! NSManagedObject
-            managedContext.delete(noteToDelete)
-            
-            do {
-                try CoreDataManager.shared.saveContext()
-                count -= 1
-            } catch let error as NSError {
-                assertionFailure("Could not save changes to CoreData: \(error), \(error.userInfo)")
-            }
-        } catch let error as NSError {
-            assertionFailure("Could not delete object from CoreDara: \(error), \(error.userInfo)")
-        }
-    }
+
 }

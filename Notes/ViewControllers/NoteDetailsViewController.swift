@@ -99,8 +99,8 @@ final class NoteDetailsViewController: UIViewController {
     
     private func configureView() {
         if let note = note {
-            titleTextField.text = note.noteTitle
-            textBodyTextView.text = note.noteTextBody
+            titleTextField.text = note.title
+            textBodyTextView.text = note.textBody
         }
     }
     
@@ -131,16 +131,21 @@ final class NoteDetailsViewController: UIViewController {
     }
     
     private func saveNote() {
-        //TODO: не эдитит текущую, а создает каждый раз новую!!!
-        if let noteTitleText = titleTextField.text,
-            let noteBodyText = textBodyTextView.text {
-            if noteTitleText.isEmpty && noteBodyText.isEmpty {
-                showAlert(title: "Your note cannot be empty.", text: "Please add a title or a text body of your note ;)")
-            } else {
-                let note = Note(noteTitle: noteTitleText, noteTextBody: noteBodyText)
-                NoteStorageManager.shared.saveNote(note: note)
-            }
+        guard let noteTitle = titleTextField.text, let noteBodyText = textBodyTextView.text else {
+            return
         }
+        if let note = note {
+            note.title = noteTitle
+            note.textBody = noteBodyText
+            CoreDataManager.shared.saveNote(note: note)
+        } else {
+            let note = Note(title: noteTitle, textBody: noteBodyText)
+            CoreDataManager.shared.saveNote(note: note)
+        }
+        //TODO: add a check
+        /* if noteTitle.isEmpty && noteBodyText.isEmpty {
+         showAlert(title: "Your note cannot be empty.", text: "Please add a title or a text body of your note ;)")
+         } else { */
     }
     
     private func showAlert(title: String, text: String) {

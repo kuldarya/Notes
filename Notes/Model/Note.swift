@@ -9,22 +9,22 @@
 import Foundation
 
 final class Note {
-    let noteId: UUID
-    let noteTitle: String
-    let noteTextBody: String
-    let noteTimeStamp: Date
+    let id: UUID
+    var title: String
+    var textBody: String
+    var timeStamp: Date
     
-    init(noteId: UUID, noteTitle: String, noteTextBody: String, noteTimeStamp: Date) {
-        self.noteId = noteId
-        self.noteTitle = noteTitle
-        self.noteTextBody = noteTextBody
-        self.noteTimeStamp = noteTimeStamp
+    init(id: UUID, title: String, textBody: String, timeStamp: Date) {
+        self.id = id
+        self.title = title
+        self.textBody = textBody
+        self.timeStamp = timeStamp
     }
     
-    init(noteTitle: String, noteTextBody: String) {
-        self.noteId = UUID()
-        self.noteTitle = noteTitle
-        self.noteTextBody = noteTextBody
-        self.noteTimeStamp = Date()
+    init(title: String, textBody: String) {
+        self.id = UUID()
+        self.title = title
+        self.textBody = textBody
+        self.timeStamp = Date()
     }
 }

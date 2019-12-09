@@ -19,16 +19,13 @@ final class NotesListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        //TODO: ?
-        NoteStorageManager.shared.setManagedContext(managedObjectContext: CoreDataManager.shared.managedContext)
         setupNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        notes = CoreDataManager.shared.fetchAllNotes(managedContext: CoreDataManager.shared.managedContext)
-        
+            
+        notes = CoreDataManager.shared.fetchNotes()
         tableView.reloadData()
     }
     
@@ -74,7 +71,7 @@ extension NotesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             notes.remove(at: indexPath.row)
-            NoteStorageManager.shared.deleteNote(at: indexPath.row)
+            //TODO: delete from CoreDara here!
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

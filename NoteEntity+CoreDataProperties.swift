@@ -12,7 +12,6 @@ import CoreData
 
 
 extension NoteEntity {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<NoteEntity> {
         return NSFetchRequest<NoteEntity>(entityName: "NoteEntity")
     }
