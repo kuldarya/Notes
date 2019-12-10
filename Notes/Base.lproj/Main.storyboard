@@ -166,7 +166,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="klG-U7-r0X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <customObject id="tQe-wd-3px" customClass="NotesListDesigner" customModule="Notes" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="1743.4782608695652" y="89.732142857142847"/>
         </scene>
