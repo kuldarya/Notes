@@ -51,13 +51,19 @@ final class NoteDetailsViewController: UIViewController {
         super.viewDidLoad()
         
         titleTextField.delegate = self
-        textBodyTextView.delegate = self
         
         initialSetup()
         configureView()
         
         subscribeToKeyboardNotifications()
         hideKeyboardWhenTappedAround()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        titleTextField.becomeFirstResponder()
+        setDoneButton()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -157,17 +163,7 @@ final class NoteDetailsViewController: UIViewController {
     }
 }
 
-extension NoteDetailsViewController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        setDoneButton()
-    }
-}
-
 extension NoteDetailsViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        setDoneButton()
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == titleTextField {
             textBodyTextView.becomeFirstResponder()
