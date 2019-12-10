@@ -37,6 +37,15 @@ final class NotesListViewController: UIViewController {
     @objc private func didTapOnCreateButton() {
         performSegue(withIdentifier: "openNote", sender: self)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "openNote" {
+            if let indexPath = sender as? NSIndexPath {
+                let controller = segue.destination as? NoteDetailsViewController
+                controller?.note = notes[indexPath.row]
+            }
+        }
+    }
 }
 
 extension NotesListViewController: UITableViewDataSource {
@@ -59,21 +68,19 @@ extension NotesListViewController: UITableViewDelegate {
         performSegue(withIdentifier: "openNote", sender: indexPath)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "openNote" {
-            if let indexPath = tableView.indexPathForSelectedRow {
-                let controller = segue.destination as? NoteDetailsViewController
-                controller?.note = notes[indexPath.row]
-            }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { (action, view, success: @escaping (Bool) -> Void) in
+            self.performSegue(withIdentifier: "openNote", sender: indexPath)
+            success(true)
         }
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            CoreDataManager.shared.deleteNote(note: notes[indexPath.row])
-            notes.remove(at: indexPath.row)
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, success: @escaping (Bool) -> Void) in
+            CoreDataManager.shared.deleteNote(note: self.notes[indexPath.row])
+            self.notes.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            success(true)
         }
+        return UISwipeActionsConfiguration(actions: [editAction, deleteAction])
     }
 }
 
