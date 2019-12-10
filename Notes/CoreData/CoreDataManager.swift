@@ -43,16 +43,7 @@ final class CoreDataManager {
             savedNote.title = note.title
             savedNote.textBody = note.textBody
         } else {
-            guard let entity = NSEntityDescription.entity(forEntityName: NoteEntity.className, in: managedContext) else {
-                assertionFailure()
-                return
-            }
-            let noteMO = NSManagedObject(entity: entity, insertInto: managedContext)
-            
-            noteMO.setValue(note.id, forKey: #keyPath(NoteEntity.id))
-            noteMO.setValue(note.title, forKey: #keyPath(NoteEntity.title))
-            noteMO.setValue(note.textBody, forKey: #keyPath(NoteEntity.textBody))
-            noteMO.setValue(note.timeStamp, forKey: #keyPath(NoteEntity.timeStamp))
+            _ = NoteEntity(note: note, context: managedContext)
         }
         
         do {
@@ -73,19 +64,7 @@ final class CoreDataManager {
         
         do {
             let fetchedNotes = try managedContext.fetch(request)
-            fetchedNotes.forEach { result in
-                
-                guard let id = result.value(forKey: #keyPath(NoteEntity.id)) as? UUID,
-                    let title = result.value(forKey: #keyPath(NoteEntity.title)) as? String,
-                    let textBody = result.value(forKey: #keyPath(NoteEntity.textBody)) as? String,
-                    let timeStamp = result.value(forKey: #keyPath(NoteEntity.timeStamp)) as? Date else {
-                        return
-                }
-                notes.append(Note.init(id: id,
-                                       title: title,
-                                       textBody: textBody,
-                                       timeStamp: timeStamp))
-            }
+            notes = fetchedNotes.map { .init(noteEntity: $0) }
         } catch let error as NSError {
             assertionFailure("Could not fetch notes from CoreData: \(error), \(error.userInfo)")
         }
@@ -110,7 +89,7 @@ final class CoreDataManager {
         do {
             try saveContext()
         } catch let error as NSError {
-            assertionFailure("Could not save notes from CoreData: \(error), \(error.userInfo)")
+            assertionFailure("Could not save notes to CoreData: \(error), \(error.userInfo)")
         }
     }
 }

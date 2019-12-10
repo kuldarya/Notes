@@ -23,6 +23,7 @@
 		4B7A98DB2397BA70009FD582 /* NoteEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A98D92397BA70009FD582 /* NoteEntity+CoreDataProperties.swift */; };
 		4B7A98DF239814BE009FD582 /* ViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A98DE239814BE009FD582 /* ViewController+Utils.swift */; };
 		4B7A9901239BAC03009FD582 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A9900239BAC03009FD582 /* SceneDelegate.swift */; };
+		4B7A9903239FC2A8009FD582 /* NSManagedObject+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A9902239FC2A8009FD582 /* NSManagedObject+Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		4B7A98D92397BA70009FD582 /* NoteEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEntity+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4B7A98DE239814BE009FD582 /* ViewController+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Utils.swift"; sourceTree = "<group>"; };
 		4B7A9900239BAC03009FD582 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		4B7A9902239FC2A8009FD582 /* NSManagedObject+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Utils.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				4B30D4D223966A8100882218 /* NSObject+Utils.swift */,
 				4B30D4D82396720700882218 /* DateToString+Utils.swift */,
 				4B7A98DE239814BE009FD582 /* ViewController+Utils.swift */,
+				4B7A9902239FC2A8009FD582 /* NSManagedObject+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 				4B30D4F22397B7E800882218 /* NoteEntity.xcdatamodeld in Sources */,
 				4B30D4CE239667E100882218 /* Note.swift in Sources */,
 				4B30D4D92396720700882218 /* DateToString+Utils.swift in Sources */,
+				4B7A9903239FC2A8009FD582 /* NSManagedObject+Utils.swift in Sources */,
 				4B7A98DB2397BA70009FD582 /* NoteEntity+CoreDataProperties.swift in Sources */,
 				4B7A98DF239814BE009FD582 /* ViewController+Utils.swift in Sources */,
 				4B30D4E62397A08900882218 /* CoreDataManager.swift in Sources */,

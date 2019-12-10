@@ -7,10 +7,16 @@
 //
 //
 
-import Foundation
 import CoreData
 
 @objc(NoteEntity)
 public class NoteEntity: NSManagedObject {
-
+    convenience init?(note: Note, context: NSManagedObjectContext) {
+        self.init(managedObjectContext: context)
+        
+        self.id = note.id
+        self.title = note.title
+        self.textBody = note.textBody
+        self.timeStamp = note.timeStamp
+    }
 }

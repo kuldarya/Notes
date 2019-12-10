@@ -10,6 +10,7 @@ import UIKit
 
 final class NoteDetailsViewController: UIViewController {
     @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var scrollViewBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var titleLabel: UILabel! {
         willSet {
@@ -42,8 +43,7 @@ final class NoteDetailsViewController: UIViewController {
     
     var note: Note?
     
-    //TODO: what's the best way?
-    private var doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(saveNoteToCoreData))
+    lazy var doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(saveNoteToCoreData))
     
     //MARK: Lifecycle
     
@@ -110,13 +110,17 @@ final class NoteDetailsViewController: UIViewController {
         }
         let keyboardHeight = keyboardFrame.cgRectValue.height
         
-        textBodyTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
-        textBodyTextView.scrollIndicatorInsets = textBodyTextView.contentInset
-        textBodyTextView.scrollRangeToVisible(textBodyTextView.selectedRange)
+        UIView.animate(withDuration: 0.3) {
+            self.scrollViewBottomConstraint.constant = -keyboardHeight
+            self.view.layoutIfNeeded()
+        }
     }
 
     @objc private func keyboardWillHideNotification(_ notification: Notification) {
-        view.endEditing(true)
+        UIView.animate(withDuration: 0.3) {
+            self.scrollViewBottomConstraint.constant = 0.0
+            self.view.layoutIfNeeded()
+        }
     }
     
     @objc private func saveNoteToCoreData() {
@@ -131,7 +135,11 @@ final class NoteDetailsViewController: UIViewController {
     }
     
     private func saveNote() {
-        guard let noteTitle = titleTextField.text, let noteBodyText = textBodyTextView.text else {
+        guard let noteTitle = titleTextField.text, let noteBodyText = textBodyTextView.text,
+            (!noteTitle.isEmpty || !noteBodyText.isEmpty) else {
+                if let note = note {
+                    CoreDataManager.shared.deleteNote(note: note)
+                }
             return
         }
         if let note = note {
@@ -142,30 +150,22 @@ final class NoteDetailsViewController: UIViewController {
             let note = Note(title: noteTitle, textBody: noteBodyText)
             CoreDataManager.shared.saveNote(note: note)
         }
-        //TODO: add a check
-        /* if noteTitle.isEmpty && noteBodyText.isEmpty {
-         showAlert(title: "Your note cannot be empty.", text: "Please add a title or a text body of your note ;)")
-         } else { */
     }
     
-    private func showAlert(title: String, text: String) {
-        // TODO: improve implementation
-        let alertController = UIAlertController(title: title, message: text, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
+    private func setDoneButton() {
+        navigationItem.rightBarButtonItem = doneButton
     }
 }
 
 extension NoteDetailsViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        navigationItem.rightBarButtonItem = doneButton
+        setDoneButton()
     }
 }
 
 extension NoteDetailsViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        navigationItem.rightBarButtonItem = doneButton
+        setDoneButton()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -173,15 +173,5 @@ extension NoteDetailsViewController: UITextFieldDelegate {
             textBodyTextView.becomeFirstResponder()
         }
         return true
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let textFieldText = textField.text,
-            let rangeOfTextToReplace = Range(range, in: textFieldText) else {
-                return false
-        }
-        let substringToReplace = textFieldText[rangeOfTextToReplace]
-        let count = textFieldText.count - substringToReplace.count + string.count
-        return count <= 35
     }
 }
