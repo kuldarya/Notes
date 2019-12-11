@@ -43,7 +43,7 @@ final class NoteDetailsViewController: UIViewController {
     
     var note: Note?
     
-    lazy var doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(saveNoteToCoreData))
+    private lazy var doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(saveNoteToCoreData))
     
     //MARK: Lifecycle
     
@@ -52,15 +52,14 @@ final class NoteDetailsViewController: UIViewController {
         
         titleTextField.delegate = self
         
-        initialSetup()
         configureView()
-        
+                
         subscribeToKeyboardNotifications()
         hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         
         titleTextField.becomeFirstResponder()
         setDoneButton()
@@ -97,12 +96,6 @@ final class NoteDetailsViewController: UIViewController {
 
     //MARK: - Setup
     
-    private func initialSetup() {
-        navigationItem.rightBarButtonItem = nil
-        titleTextField.text = ""
-        textBodyTextView.text = ""
-    }
-    
     private func configureView() {
         if let note = note {
             titleTextField.text = note.title
@@ -111,7 +104,7 @@ final class NoteDetailsViewController: UIViewController {
     }
     
     @objc private func keyboardWillShowNotification(_ notification: Notification) {
-        guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
         }
         let keyboardHeight = keyboardFrame.cgRectValue.height

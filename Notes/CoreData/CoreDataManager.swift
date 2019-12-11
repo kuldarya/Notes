@@ -15,7 +15,7 @@ final class CoreDataManager {
 
     lazy var managedContext = persistentContainer.viewContext
 
-    lazy var persistentContainer: NSPersistentContainer = {
+    private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "NoteEntity")
         
         container.loadPersistentStores { (storeDescription, error) in
@@ -37,7 +37,7 @@ final class CoreDataManager {
     
     func saveNote(note: Note) {
         let request: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "id = %@", note.id as CVarArg)
+        request.predicate = NSPredicate(format: "%K == %@", argumentArray: [#keyPath(NoteEntity.id), note.id as CVarArg])
         
         if let savedNote = try? managedContext.fetch(request).first {
             savedNote.title = note.title
@@ -75,7 +75,7 @@ final class CoreDataManager {
     
     func deleteNote(note: Note) {
         let request: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "id = %@", note.id as CVarArg)
+        request.predicate = NSPredicate(format: "%K == %@", argumentArray: [#keyPath(NoteEntity.id), note.id as CVarArg])
         
         do {
             let notes = try managedContext.fetch(request)

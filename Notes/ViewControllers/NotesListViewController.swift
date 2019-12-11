@@ -11,22 +11,25 @@ import UIKit
 final class NotesListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
-    var notes = [Note]()
+    private var notes = [Note]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        
+        setupTableView()
         setupNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
             
         notes = CoreDataManager.shared.fetchNotes()
         tableView.reloadData()
+    }
+    
+    private func setupTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
     }
     
     private func setupNavigationBar() {
@@ -68,19 +71,12 @@ extension NotesListViewController: UITableViewDelegate {
         performSegue(withIdentifier: "openNote", sender: indexPath)
     }
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let editAction = UIContextualAction(style: .normal, title: "Edit") { (action, view, success: @escaping (Bool) -> Void) in
-            self.performSegue(withIdentifier: "openNote", sender: indexPath)
-            success(true)
-        }
-        
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, success: @escaping (Bool) -> Void) in
-            CoreDataManager.shared.deleteNote(note: self.notes[indexPath.row])
-            self.notes.remove(at: indexPath.row)
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            CoreDataManager.shared.deleteNote(note: notes[indexPath.row])
+            notes.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            success(true)
         }
-        return UISwipeActionsConfiguration(actions: [editAction, deleteAction])
     }
 }
 
