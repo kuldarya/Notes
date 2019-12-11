@@ -15,7 +15,7 @@ final class CoreDataManager {
 
     lazy var managedContext = persistentContainer.viewContext
 
-    private lazy var persistentContainer: NSPersistentContainer = {
+    lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "NoteEntity")
         
         container.loadPersistentStores { (storeDescription, error) in

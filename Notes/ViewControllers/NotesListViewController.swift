@@ -23,7 +23,15 @@ final class NotesListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
             
-        notes = NoteStorageManager.shared.fetchNotes()
+        NoteStorageManager.shared.fetchNotes { result in
+            switch result {
+            case .success(let notes):
+                self.notes = notes
+            case .failure(_):
+                break
+                //TODO: show alert
+            }
+        }
         tableView.reloadData()
     }
     

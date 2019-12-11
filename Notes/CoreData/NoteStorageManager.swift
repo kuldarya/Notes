@@ -28,20 +28,23 @@ final class NoteStorageManager {
         }
     }
     
-    func fetchNotes() -> [Note] {
-        var notes = [Note]()
+    func fetchNotes(completion: @escaping (Result<[Note], Error>) -> Void) {
         let request: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
         
         let sortDescriptor = [NSSortDescriptor(key: #keyPath(NoteEntity.timeStamp), ascending: false)]
         request.sortDescriptors = sortDescriptor
         
-        do {
-            let fetchedNotes = try CoreDataManager.shared.managedContext.fetch(request)
-            notes = fetchedNotes.map { .init(noteEntity: $0) }
-        } catch let error as NSError {
-            assertionFailure("Could not fetch notes from CoreData: \(error), \(error.userInfo)")
+        CoreDataManager.shared.persistentContainer.performBackgroundTask { context in
+            do {
+                let fetchedNotes = try context.fetch(request)
+                let notes = fetchedNotes.map { Note(noteEntity: $0) }
+                completion(.success(notes))
+            }
+            catch let error as NSError {
+                completion(.failure(error))
+                assertionFailure("Could not fetch notes from CoreData: \(error), \(error.userInfo)")
+            }
         }
-        return notes
     }
     
     func deleteNote(note: Note) {
