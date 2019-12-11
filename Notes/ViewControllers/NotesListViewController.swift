@@ -23,7 +23,7 @@ final class NotesListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
             
-        notes = CoreDataManager.shared.fetchNotes()
+        notes = NoteStorageManager.shared.fetchNotes()
         tableView.reloadData()
     }
     
@@ -73,7 +73,7 @@ extension NotesListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            CoreDataManager.shared.deleteNote(note: notes[indexPath.row])
+            NoteStorageManager.shared.deleteNote(note: notes[indexPath.row])
             notes.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }

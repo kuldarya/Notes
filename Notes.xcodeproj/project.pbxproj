@@ -24,6 +24,7 @@
 		4B7A9903239FC2A8009FD582 /* NSManagedObject+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A9902239FC2A8009FD582 /* NSManagedObject+Utils.swift */; };
 		4BD69E0323A0FF3A00B63D40 /* NoteEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD69E0123A0FF3A00B63D40 /* NoteEntity+CoreDataProperties.swift */; };
 		4BD69E0423A0FF3A00B63D40 /* NoteEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD69E0223A0FF3A00B63D40 /* NoteEntity+CoreDataClass.swift */; };
+		4BD69E0623A12BE600B63D40 /* NoteStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD69E0523A12BE600B63D40 /* NoteStorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		4B7A9902239FC2A8009FD582 /* NSManagedObject+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Utils.swift"; sourceTree = "<group>"; };
 		4BD69E0123A0FF3A00B63D40 /* NoteEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NoteEntity+CoreDataProperties.swift"; path = "MOObject/NoteEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4BD69E0223A0FF3A00B63D40 /* NoteEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NoteEntity+CoreDataClass.swift"; path = "MOObject/NoteEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4BD69E0523A12BE600B63D40 /* NoteStorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteStorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 			children = (
 				4B30D4EF2397AD5500882218 /* MOObject */,
 				4B30D4E52397A08900882218 /* CoreDataManager.swift */,
+				4BD69E0523A12BE600B63D40 /* NoteStorageManager.swift */,
 				4B30D4F02397B7E800882218 /* NoteEntity.xcdatamodeld */,
 			);
 			path = CoreData;
@@ -248,6 +251,7 @@
 				4B30D4F22397B7E800882218 /* NoteEntity.xcdatamodeld in Sources */,
 				4BD69E0423A0FF3A00B63D40 /* NoteEntity+CoreDataClass.swift in Sources */,
 				4B30D4CE239667E100882218 /* Note.swift in Sources */,
+				4BD69E0623A12BE600B63D40 /* NoteStorageManager.swift in Sources */,
 				4B30D4D92396720700882218 /* DateToString+Utils.swift in Sources */,
 				4B7A9903239FC2A8009FD582 /* NSManagedObject+Utils.swift in Sources */,
 				4BD69E0323A0FF3A00B63D40 /* NoteEntity+CoreDataProperties.swift in Sources */,

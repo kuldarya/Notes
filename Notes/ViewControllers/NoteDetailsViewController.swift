@@ -137,17 +137,17 @@ final class NoteDetailsViewController: UIViewController {
         guard let noteTitle = titleTextField.text, let noteBodyText = textBodyTextView.text,
             (!noteTitle.isEmpty || !noteBodyText.isEmpty) else {
                 if let note = note {
-                    CoreDataManager.shared.deleteNote(note: note)
+                    NoteStorageManager.shared.deleteNote(note: note)
                 }
             return
         }
         if let note = note {
             note.title = noteTitle
             note.textBody = noteBodyText
-            CoreDataManager.shared.saveNote(note: note)
+            NoteStorageManager.shared.saveNote(note: note)
         } else {
             let note = Note(title: noteTitle, textBody: noteBodyText)
-            CoreDataManager.shared.saveNote(note: note)
+            NoteStorageManager.shared.saveNote(note: note)
         }
     }
     
