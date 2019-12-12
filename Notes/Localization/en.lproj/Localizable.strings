@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  Notes
+
+  Created by Darya Kuliashova on 12/12/19.
+  Copyright © 2019 Darya Kuliashova. All rights reserved.
+*/
+
+/* note */
+"notes" = "Notes";
+"noteTitle" = "Note Title";
+"noteText" = "Note Text";
+
+/* button */
+"done" = "Done";

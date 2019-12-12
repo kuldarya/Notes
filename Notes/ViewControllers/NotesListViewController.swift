@@ -7,16 +7,23 @@
 //
 
 import UIKit
+import Rswift
 
 final class NotesListViewController: UIViewController {
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView! {
+        willSet {
+            newValue.dataSource = self
+            newValue.delegate = self
+        }
+    }
     
     private var notes = [Note]()
+    
+    //MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupTableView()
         setupNavigationBar()
     }
     
@@ -35,20 +42,17 @@ final class NotesListViewController: UIViewController {
         tableView.reloadData()
     }
     
-    private func setupTableView() {
-        tableView.dataSource = self
-        tableView.delegate = self
-    }
+    //MARK: - Setup
     
     private func setupNavigationBar() {
-        navigationItem.title = "Notes"
+        navigationItem.title = R.string.localizable.notes()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapOnCreateButton))
     }
     
     @objc private func didTapOnCreateButton() {
-        performSegue(withIdentifier: "openNote", sender: self)
+        performSegue(withIdentifier: R.segue.notesListViewController.openNote, sender: self)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openNote" {
             if let indexPath = sender as? NSIndexPath {
@@ -76,7 +80,7 @@ extension NotesListViewController: UITableViewDataSource {
 
 extension NotesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "openNote", sender: indexPath)
+        performSegue(withIdentifier: R.segue.notesListViewController.openNote, sender: indexPath)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

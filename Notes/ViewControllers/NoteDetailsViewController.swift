@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Rswift
 
 final class NoteDetailsViewController: UIViewController {
     @IBOutlet private weak var scrollView: UIScrollView!
@@ -15,7 +16,7 @@ final class NoteDetailsViewController: UIViewController {
     @IBOutlet private weak var titleLabel: UILabel! {
         willSet {
             newValue.font = .boldSystemFont(ofSize: 16)
-            newValue.text = "Note Title"
+            newValue.text = R.string.localizable.noteTitle()
         }
     }
     @IBOutlet private weak var titleTextField: UITextField! {
@@ -28,7 +29,7 @@ final class NoteDetailsViewController: UIViewController {
     @IBOutlet private weak var textBodyLabel: UILabel! {
         willSet {
             newValue.font = .boldSystemFont(ofSize: 16)
-            newValue.text = "Note Text"
+            newValue.text = R.string.localizable.noteText()
         }
     }
     @IBOutlet private weak var textBodyTextView: UITextView! {
@@ -44,11 +45,16 @@ final class NoteDetailsViewController: UIViewController {
         }
     }
     
+    private let animationDuration = 0.25
+    
     var note: Note?
     
-    private lazy var doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(saveNoteToCoreData))
+    private lazy var doneButton = UIBarButtonItem(title: R.string.localizable.done(),
+                                                  style: .done,
+                                                  target: self,
+                                                  action: #selector(saveNoteToCoreData))
     
-    //MARK: Lifecycle
+    //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +67,6 @@ final class NoteDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        titleTextField.becomeFirstResponder()
         setDoneButton()
     }
     
@@ -120,14 +125,14 @@ final class NoteDetailsViewController: UIViewController {
         }
         let keyboardHeight = keyboardFrame.cgRectValue.height
         
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: animationDuration) {
             self.scrollViewBottomConstraint.constant = -keyboardHeight
             self.view.layoutIfNeeded()
         }
     }
 
     @objc private func keyboardWillHideNotification(_ notification: Notification) {
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: animationDuration) {
             self.scrollViewBottomConstraint.constant = 0.0
             self.view.layoutIfNeeded()
         }
@@ -141,7 +146,7 @@ final class NoteDetailsViewController: UIViewController {
     private func resetBeforeSaving() {
         titleTextField.resignFirstResponder()
         textBodyTextView.resignFirstResponder()
-        navigationItem.rightBarButtonItem = nil
+        doneButton.isEnabled = false
     }
     
     private func saveNote() {

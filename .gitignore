@@ -25,8 +25,8 @@ fastlane/screenshots/screenshots.html
 fastlane/screenshots/**/*.png
 !fastlane/screenshots/background.png
 
-# R Swift
-#*.generated.swift
+R Swift
+*.generated.swift
 
 # Xcode build files
 *.dSYM.zip
