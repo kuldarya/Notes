@@ -22,6 +22,7 @@ final class NoteDetailsViewController: UIViewController {
         willSet {
             newValue.font = .boldSystemFont(ofSize: 16)
             newValue.textColor = .black
+            newValue.delegate = self
         }
     }
     @IBOutlet private weak var textBodyLabel: UILabel! {
@@ -38,6 +39,8 @@ final class NoteDetailsViewController: UIViewController {
             newValue.layer.borderWidth = 1
             newValue.clipsToBounds = true
             newValue.layer.cornerRadius = 10.0
+            
+            newValue.delegate = self
         }
     }
     
@@ -49,11 +52,8 @@ final class NoteDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        titleTextField.delegate = self
-        
+            
         configureView()
-                
         subscribeToKeyboardNotifications()
         hideKeyboardWhenTappedAround()
     }
@@ -103,6 +103,11 @@ final class NoteDetailsViewController: UIViewController {
         }
     }
     
+    private func setDoneButton() {
+        navigationItem.rightBarButtonItem = doneButton
+        doneButton.isEnabled = false
+    }
+    
     @objc private func keyboardWillShowNotification(_ notification: Notification) {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
@@ -150,10 +155,6 @@ final class NoteDetailsViewController: UIViewController {
             NoteStorageManager.shared.saveNote(note: note)
         }
     }
-    
-    private func setDoneButton() {
-        navigationItem.rightBarButtonItem = doneButton
-    }
 }
 
 extension NoteDetailsViewController: UITextFieldDelegate {
@@ -162,5 +163,23 @@ extension NoteDetailsViewController: UITextFieldDelegate {
             textBodyTextView.becomeFirstResponder()
         }
         return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let textfield = titleTextField.text {
+            (textfield as NSString).replacingCharacters(in: range, with: string)
+            if textfield.isEmpty {
+                doneButton.isEnabled = true
+            }
+        }
+        return true
+    }
+}
+
+extension NoteDetailsViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        if textView == textBodyTextView {
+            doneButton.isEnabled = !textView.text.isEmpty
+        }
     }
 }
