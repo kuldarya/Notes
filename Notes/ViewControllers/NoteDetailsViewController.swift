@@ -93,6 +93,12 @@ final class NoteDetailsViewController: UIViewController {
                                                   name: UIResponder.keyboardWillHideNotification,
                                                   object: nil)
     }
+    
+    //MARK: - IBActions
+    
+    @IBAction private func textFieldTextDidChange(_ sender: UITextField) {
+        updateDoneButton()
+    }
 
     //MARK: - Setup
     
@@ -128,11 +134,11 @@ final class NoteDetailsViewController: UIViewController {
     }
     
     @objc private func saveNoteToCoreData() {
-        prepareToSaveNote()
+        resetBeforeSaving()
         saveNote()
     }
     
-    private func prepareToSaveNote() {
+    private func resetBeforeSaving() {
         titleTextField.resignFirstResponder()
         textBodyTextView.resignFirstResponder()
         navigationItem.rightBarButtonItem = nil
@@ -155,6 +161,16 @@ final class NoteDetailsViewController: UIViewController {
             NoteStorageManager.shared.saveNote(note: note)
         }
     }
+    
+    private func updateDoneButton() {
+        guard let titletextField = titleTextField.text else {
+            return
+        }
+        let isTextFieldEmpty = titletextField.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        let isTextViewEmpty = textBodyTextView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        
+        doneButton.isEnabled = !isTextFieldEmpty || !isTextViewEmpty
+    }
 }
 
 extension NoteDetailsViewController: UITextFieldDelegate {
@@ -164,22 +180,10 @@ extension NoteDetailsViewController: UITextFieldDelegate {
         }
         return true
     }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let textfield = titleTextField.text {
-            (textfield as NSString).replacingCharacters(in: range, with: string)
-            if textfield.isEmpty {
-                doneButton.isEnabled = true
-            }
-        }
-        return true
-    }
 }
 
 extension NoteDetailsViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        if textView == textBodyTextView {
-            doneButton.isEnabled = !textView.text.isEmpty
-        }
+        updateDoneButton()
     }
 }

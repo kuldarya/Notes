@@ -97,6 +97,9 @@
                                                 <rect key="frame" x="20" y="36" width="374" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <connections>
+                                                    <action selector="textFieldTextDidChange:" destination="CBH-rI-7wv" eventType="editingChanged" id="n0Z-qt-3nT"/>
+                                                </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9E-2c-sad">
                                                 <rect key="frame" x="20" y="90" width="374" height="21"/>
