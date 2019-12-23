@@ -10,6 +10,7 @@
 "notes" = "Заметки";
 "noteTitle" = "Заголовок";
 "noteText" = "Текст";
+"noAdditionalText" = "Нет дополнительного текста";
 
 /* button */
 "done" = "Готово";

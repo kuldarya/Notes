@@ -10,6 +10,7 @@
 "notes" = "Notes";
 "noteTitle" = "Note Title";
 "noteText" = "Note Text";
+"noAdditionalText" = "No additional text";
 
 /* button */
 "done" = "Done";

@@ -55,10 +55,12 @@ final class NotesListViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openNote" {
-            if let indexPath = sender as? NSIndexPath {
-                let controller = segue.destination as? NoteDetailsViewController
-                controller?.note = notes[indexPath.row]
+            guard let indexPath = tableView.indexPathForSelectedRow,
+                let controller = segue.destination as? NoteDetailsViewController else {
+                    assertionFailure()
+                    return
             }
+            controller.note = notes[indexPath.row]
         }
     }
 }

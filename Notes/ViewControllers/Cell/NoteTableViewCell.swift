@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Rswift
 
 final class NoteTableViewCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel! {
@@ -34,13 +35,13 @@ final class NoteTableViewCell: UITableViewCell {
         didSet {
             if let note = note, let noteTitle = note.title, let noteTextBody = note.textBody {
                 if noteTitle.isEmpty {
-                    titleLabel.text = "No additional text"
+                    titleLabel.text = R.string.localizable.noAdditionalText()
                 } else {
                     titleLabel.text = note.title
                 }
                 
                 if noteTextBody.isEmpty {
-                    textBodyLabel.text = "No additional text"
+                    textBodyLabel.text = R.string.localizable.noAdditionalText()
                 } else {
                     textBodyLabel.text = note.textBody
                 }
