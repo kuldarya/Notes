@@ -23,7 +23,6 @@
 		4B706D2723965AA600E1BA37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B706D2523965AA600E1BA37 /* LaunchScreen.storyboard */; };
 		4B7A98DF239814BE009FD582 /* ViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A98DE239814BE009FD582 /* ViewController+Utils.swift */; };
 		4B7A9901239BAC03009FD582 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A9900239BAC03009FD582 /* SceneDelegate.swift */; };
-		4B7A9903239FC2A8009FD582 /* NSManagedObject+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A9902239FC2A8009FD582 /* NSManagedObject+Utils.swift */; };
 		4BD69E0323A0FF3A00B63D40 /* NoteEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD69E0123A0FF3A00B63D40 /* NoteEntity+CoreDataProperties.swift */; };
 		4BD69E0423A0FF3A00B63D40 /* NoteEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD69E0223A0FF3A00B63D40 /* NoteEntity+CoreDataClass.swift */; };
 		4BD69E0623A12BE600B63D40 /* NoteStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD69E0523A12BE600B63D40 /* NoteStorageManager.swift */; };
@@ -53,7 +52,6 @@
 		4B706D2823965AA600E1BA37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B7A98DE239814BE009FD582 /* ViewController+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Utils.swift"; sourceTree = "<group>"; };
 		4B7A9900239BAC03009FD582 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4B7A9902239FC2A8009FD582 /* NSManagedObject+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Utils.swift"; sourceTree = "<group>"; };
 		4BD69E0123A0FF3A00B63D40 /* NoteEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NoteEntity+CoreDataProperties.swift"; path = "MOObject/NoteEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4BD69E0223A0FF3A00B63D40 /* NoteEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NoteEntity+CoreDataClass.swift"; path = "MOObject/NoteEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4BD69E0523A12BE600B63D40 /* NoteStorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteStorageManager.swift; sourceTree = "<group>"; };
@@ -114,7 +112,6 @@
 				4B30D4D223966A8100882218 /* NSObject+Utils.swift */,
 				4B30D4D82396720700882218 /* DateToString+Utils.swift */,
 				4B7A98DE239814BE009FD582 /* ViewController+Utils.swift */,
-				4B7A9902239FC2A8009FD582 /* NSManagedObject+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -349,7 +346,6 @@
 				4B30D4CE239667E100882218 /* Note.swift in Sources */,
 				4BD69E0623A12BE600B63D40 /* NoteStorageManager.swift in Sources */,
 				4B30D4D92396720700882218 /* DateToString+Utils.swift in Sources */,
-				4B7A9903239FC2A8009FD582 /* NSManagedObject+Utils.swift in Sources */,
 				4B68F93C23A2896A00D1116E /* R.generated.swift in Sources */,
 				4BD69E0323A0FF3A00B63D40 /* NoteEntity+CoreDataProperties.swift in Sources */,
 				4B7A98DF239814BE009FD582 /* ViewController+Utils.swift in Sources */,

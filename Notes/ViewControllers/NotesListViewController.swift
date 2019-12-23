@@ -34,12 +34,15 @@ final class NotesListViewController: UIViewController {
             switch result {
             case .success(let notes):
                 self.notes = notes
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             case .failure(_):
                 break
                 //TODO: show alert
             }
         }
-        tableView.reloadData()
     }
     
     //MARK: - Setup
@@ -55,12 +58,11 @@ final class NotesListViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openNote" {
-            guard let indexPath = tableView.indexPathForSelectedRow,
-                let controller = segue.destination as? NoteDetailsViewController else {
-                    assertionFailure()
-                    return
+            if let indexPath = tableView.indexPathForSelectedRow {
+                if let controller = segue.destination as? NoteDetailsViewController {
+                    controller.note = notes[indexPath.row]
+                }
             }
-            controller.note = notes[indexPath.row]
         }
     }
 }

@@ -17,7 +17,8 @@ final class CoreDataManager {
 
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "NoteEntity")
-        
+        container.viewContext.automaticallyMergesChangesFromParent = true
+
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
                 print("Unresolved error \(error), \(error.userInfo)")

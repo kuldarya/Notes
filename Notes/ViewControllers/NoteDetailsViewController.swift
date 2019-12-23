@@ -150,7 +150,8 @@ final class NoteDetailsViewController: UIViewController {
     }
     
     private func saveNote() {
-        guard let noteTitle = titleTextField.text, let noteBodyText = textBodyTextView.text,
+        guard let noteTitle = titleTextField.text,
+            let noteBodyText = textBodyTextView.text,
             (!noteTitle.isEmpty || !noteBodyText.isEmpty) else {
                 if let note = note {
                     NoteStorageManager.shared.deleteNote(note: note)
